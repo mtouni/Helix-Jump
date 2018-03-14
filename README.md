@@ -6,7 +6,7 @@
 ## 游戏介绍
 游戏名称：Helix Jump
 相关截图：
-![]()
+![](https://github.com/Rano1/Helix-Jump/blob/master/screenshots/pic1.png)
 AppStore下载地址：https://itunes.apple.com/app/id1345968745 
 
 ## 开发环境
