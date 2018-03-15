@@ -155,7 +155,7 @@ public class Base : BaseSceneManager<Base>
             this.currentAngleRotLocal = Mathf.Lerp(this.currentAngleRotLocal, (float)(num * 10), 20f * Time.deltaTime);
             //base.transform.localRotation = Quaternion.Euler(new Vector3(0f, this.currentAngle, 0f));
             base.transform.localRotation = Quaternion.Euler(new Vector3(0f, this.currentAngle, 0f));
-            Debug.Log("this.currentAngle : " + this.currentAngle);
+            //Debug.Log("this.currentAngle : " + this.currentAngle);
         }
     }
 
@@ -167,7 +167,7 @@ public class Base : BaseSceneManager<Base>
         screenWidth = 720;
         float num2 = num / ((float)Screen.width);
         float item = (-Mathf.Sign(Input.mousePosition.x - this.startPos.x) * num2) * this.rotateSpeed;
-        Debug.Log("num : " + num + " ; num2 : " + num2);
+        //Debug.Log("num : " + num + " ; num2 : " + num2);
         if (BaseSceneManager<mc>.Instance.isGameStarted)
         {
             if (Input.GetMouseButtonDown(0))

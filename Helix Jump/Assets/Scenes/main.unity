@@ -152,7 +152,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 35062587}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ef61f1d804393e64c9f18def55fc3ea2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -31368,7 +31368,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh11264
+  m_Name: pb_Mesh11266
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -31620,6 +31620,12 @@ MonoBehaviour:
   gameId: 0
   isActive: 1
   isGameStarted: 0
+  currentPlatform: {fileID: 0}
+  decal: []
+  scoreInRow: 1
+  scoreNow: 3
+  anim: {fileID: 0}
+  splash: {fileID: 0}
 --- !u!1 &427227331
 GameObject:
   m_ObjectHideFlags: 0
@@ -31686,7 +31692,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh11278
+  m_Name: pb_Mesh11280
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -32279,7 +32285,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1318337231}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ef61f1d804393e64c9f18def55fc3ea2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -59519,7 +59525,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1382246945}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ef61f1d804393e64c9f18def55fc3ea2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -86797,7 +86803,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh11314
+  m_Name: pb_Mesh11316
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -87062,7 +87068,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1858083105}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ef61f1d804393e64c9f18def55fc3ea2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
