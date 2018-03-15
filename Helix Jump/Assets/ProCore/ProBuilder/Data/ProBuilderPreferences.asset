@@ -16,27 +16,39 @@ MonoBehaviour:
   - pbShowDetail
   - pbEnableBackfaceSelection
   - pb_SmoothingGroupEditor::m_PreviewDither
+  - pbStripProBuilderOnBuild
+  - pbDisableAutoUV2Generation
+  - pbForceConvex
+  - pbMeshesAreAssets
+  - pbUVMaterialPreview
   m_Int_keys:
   - pbDefaultEditLevel
   - pbDefaultSelectionMode
   - pbHandleAlignment
   - pb_GIWorkflowMode
   - pbVertexColorTool
+  - pbDefaultEntity
+  - pbDefaultCollider
+  - pbShadowCastingMode
   m_Float_keys:
   - pbEditorScroll.x
   - pbEditorScroll.y
   - pb_SmoothingGroupEditor::m_PreviewOpacity
   m_String_keys:
   - pbCurrentMaterialPalette
+  - pbVertexColorPrefs9
   m_Color_keys: []
-  m_Material_keys: []
-  m_Bool_values: 01010000
-  m_Int_values: 0100000002000000000000000000000000000000
+  m_Material_keys:
+  - pbDefaultMaterial
+  m_Bool_values: 010101000100000000
+  m_Int_values: 0000000001000000000000000000000000000000000000000200000002000000
   m_Float_values:
   - 0
-  - 180
+  - 0
   - 0.918
   m_String_values:
   - Assets/ProCore/ProBuilder/Data/Default Material Palette.asset
+  - RGBA(0.898, 0.898, 0.898, 1.000)
   m_Color_values: []
-  m_Material_values: []
+  m_Material_values:
+  - {fileID: 2100000, guid: 55296d1b6ee54e14e8eb4648d4b448ee, type: 2}
