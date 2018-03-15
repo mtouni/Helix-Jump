@@ -46,6 +46,11 @@ public class Base : BaseSceneManager<Base>
 
     private void Awake()
     {
+        //原有代码
+        Application.targetFrameRate = 60;
+        this.speedHistory = new List<float>();
+
+        //自己加的
         this.beginCount = new List<int>();
         this.beginCount.Add(5);
         this.easyCount = new List<int>();
@@ -57,9 +62,6 @@ public class Base : BaseSceneManager<Base>
 
         this.platforms = new List<GameObject>();
 
-        Application.targetFrameRate = 60;
-        this.speedHistory = new List<float>();
-
         this.currentYOffset = 0;
         this.currentAngleSpeed = 10;
 
@@ -67,6 +69,9 @@ public class Base : BaseSceneManager<Base>
         this.rotateSpeed = 90;
         this.maxRotSpeed = 180;
         Debug.Log("startPos : " + this.startPos);
+
+
+        //原有代码
         this.CreateLevel();
     }
 
@@ -134,18 +139,6 @@ public class Base : BaseSceneManager<Base>
 
     // Update is called once per frame
     void Update () {
-        //float moveHorizontal = Input.GetAxis("Horizontal");
-        //float moveVertical = Input.GetAxis("Vertical");
-        //layers.transform.Rotate(Vector3.up, moveHorizontal, Space.World);
-
-        //if (Input.touchCount == 1){
-        //    Debug.Log("111");
-        //   print("1");
-        //   Touch t = Input.GetTouch(0);
-        //   if(t.phase == TouchPhase.Moved)
-        //   {
-        //      layers.transform.Rotate(Vector3.right, Input.GetAxis("Mouse Y"), Space.World);
-        //  }
         if (BaseSceneManager<mc>.Instance.isActive)
         {
             this.UpdateInput();
