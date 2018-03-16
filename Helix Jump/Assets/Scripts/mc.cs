@@ -184,31 +184,31 @@ public class mc : BaseSceneManager<mc>
         this.isActive = false;
         base.GetComponent<Rigidbody>().isKinematic = true;//让球不再运动
         this.restartMenu.SetActive(true);
-        this.death.Play();
-        base.transform.localScale = new Vector3(2.3f, 1.7f, 2.3f);
-        this.restartPercentage.text = ((int)((BaseSceneManager<mc>.Instance.currentPlayformId * 100f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)))).ToString("D") + "% Completed!";
-        if (PlayerPrefs.HasKey("sessionsCount"))
-        {
-            this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
-        }
-        if (((this.sessionsCount == 5) || (this.sessionsCount == 0x19)) || (((this.sessionsCount == 100) || (this.sessionsCount == 200)) || (this.sessionsCount == 500)))
-        {
-            BaseSceneManager<UI>.Instance.StartRateUs();
-        }
-        this.bestUI.SetActive(false);
-        if (!this.reviveShown)
-        {
-            this.reviveShown = true;
-            BaseSceneManager<UI>.Instance.ShowRevive();
-        }
-        this.ReportScore((float)score);
-        //VoodooSauce.OnGameFinished((float)score);
-        if (PlayerPrefs.GetInt("bestScore") < score)
-        {
-            this.newRecord.gameObject.SetActive(true);
-            PlayerPrefs.SetInt("bestScore", score);
-            this.newRecord.text = "NEW RECORD!\n" + score.ToString();
-        }
+        //this.death.Play();
+        //base.transform.localScale = new Vector3(2.3f, 1.7f, 2.3f);
+        //this.restartPercentage.text = ((int)((BaseSceneManager<mc>.Instance.currentPlayformId * 100f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)))).ToString("D") + "% Completed!";
+        //if (PlayerPrefs.HasKey("sessionsCount"))
+        //{
+        //    this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
+        //}
+        //if (((this.sessionsCount == 5) || (this.sessionsCount == 0x19)) || (((this.sessionsCount == 100) || (this.sessionsCount == 200)) || (this.sessionsCount == 500)))
+        //{
+        //    BaseSceneManager<UI>.Instance.StartRateUs();
+        //}
+        //this.bestUI.SetActive(false);
+        //if (!this.reviveShown)
+        //{
+        //    this.reviveShown = true;
+        //    BaseSceneManager<UI>.Instance.ShowRevive();
+        //}
+        //this.ReportScore((float)score);
+        ////VoodooSauce.OnGameFinished((float)score);
+        //if (PlayerPrefs.GetInt("bestScore") < score)
+        //{
+        //    this.newRecord.gameObject.SetActive(true);
+        //    PlayerPrefs.SetInt("bestScore", score);
+        //    this.newRecord.text = "NEW RECORD!\n" + score.ToString();
+        //}
     }
 
     public void ForceDestroy(Transform platform)
@@ -287,7 +287,8 @@ public class mc : BaseSceneManager<mc>
             }
             else
             {
-                //this.Fail();
+                UnityEngine.Debug.Log("失败");
+                this.Fail();
             }
         }
         if (other.collider.tag == "Finish")
