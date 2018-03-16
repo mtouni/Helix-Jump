@@ -14,13 +14,13 @@ public class mc : BaseSceneManager<mc>
     public Text AddMoneyRestartText;
     public Animator anim;
     public GameObject AnimatedButton;//
-    public Text best;//最好成绩
+    public Text best;//Text：最好成绩
     public GameObject bestUI;//最好成绩的UI
     //
     public GameObject canvas;//画布
     //
     public int currency;//金币
-    public List<int> currencyList;
+    public List<int> currencyList;//货币列表
     public Text currencyText;//文本：当前文本
     public GameObject currencyUI;//UI：当前金币
     //
@@ -30,41 +30,42 @@ public class mc : BaseSceneManager<mc>
     public AudioSource death;//音效：死亡
     public List<GameObject> decal;//贴花纸
     public ParticleSystem extraSplash;
-    public float finalDrag;
     public GameObject finishPrefab;//完成比赛的Prefab
     public GameType gameId;
     public bool isActive = true;
     public bool isGameStarted;
     public Text levelFrom;
     public Image LevelPassedPin;
-    public Text levelText;//文字：等级
+    public Text levelText;//文字：过关，等级提升
     public Text levelTo;
     public GameObject levelUpButton;
     public Text levelUpText;
-    public PhysicMaterial mat;
+    public PhysicMaterial mat;//物理反弹力
     public Material mcMat;
     public Text newRecord;
-    public List<GameObject> objects;
-    public AudioSource pass;
+    public List<GameObject> objects;//游戏块
+    public AudioSource pass;//音乐播放：通过
     public GameObject plusAwesomePrefab;
     public GameObject plusPrefab;
     public Image progression;
-    public ParticleSystem psBurn;
-    public ParticleSystem psBurn1;
+    public ParticleSystem psBurn;//粒子效果：燃烧
+    public ParticleSystem psBurn1;//粒子效果：燃烧1
     public GameObject psPickup;
-    public ParticleSystem psSplash;//粒子效果
-    public GameObject restartMenu;//重新开始菜单（完成）
+    public ParticleSystem psSplash; ///粒子效果
+    public GameObject restartMenu;/// 重新开始菜单（完成）
     public Text restartPercentage;
     private bool reviveShown;
-    public static int score;
+    private static int score = 0;//分数
     public int scoreInRow = 1;
     public int scoreNow = 3;
+    //
     public Text scoreNowText;
-    public Text scoreText;
+    public Text scoreText;//当前分数
     private int sessionsCount;
-    private bool setUpvelocity;
-    public AudioSource splash;
-    public float startDrag;
+    private bool setUpvelocity;//是否需要弹起来
+    public AudioSource splash;//音乐播放：球落地水花溅开
+    public float startDrag;//开始时候的阻力：
+    public float finalDrag;//结束时候的阻力：
     private string[] versionNames = new string[] { "Base", "WorldBuilder", "ShorterLevels", "Animations" };//版本名称
     public GameObject winMenu;//获胜界面
 
@@ -75,16 +76,16 @@ public class mc : BaseSceneManager<mc>
         isGameStarted = true;
         //原本的
         this.currentObjectLevel = PlayerPrefs.GetInt("currentObjectLevel");
-        //if (this.gameId == GameType.GAME_WORLD)
-        //{
+        if (this.gameId == GameType.GAME_WORLD)
+        {
         //    this.currencyUI.SetActive(true);
         //    this.levelUpButton.SetActive(true);
         //    this.currency = PlayerPrefs.GetInt("currency");
         //    this.currencyText.text = this.currency.ToString();
-        //}
+        }
         //this.UpdateObjects();
-        //this.currentPlatform = null;
-        //this.best.text = "best: " + PlayerPrefs.GetInt("bestScore");
+        this.currentPlatform = null;
+        this.best.text = "best: " + PlayerPrefs.GetInt("bestScore");
         //this.levelFrom.text = (Base.currentLevel + 1).ToString();
         //this.levelTo.text = (Base.currentLevel + 2).ToString();
         ////FB.Init(new InitDelegate(this.InitCallback), null, null);
@@ -97,15 +98,18 @@ public class mc : BaseSceneManager<mc>
     void Update()
     {
         //this.scoreNowText.text = this.scoreNow.ToString();
-        //this.scoreText.text = score.ToString();
+        this.scoreText.text = score.ToString();
         //this.currencyText.text = this.currency.ToString();
-        //if ((this.currentPlayformId / (BaseSceneManager<Base>.Instance.platforms.Count - 1)) == 1)
-        //{
-        //    this.LevelPassedPin.gameObject.SetActive(true);
-        //}
-        //base.GetComponent<Rigidbody>().drag = Mathf.Lerp(this.startDrag, this.finalDrag, (this.currentPlayformId * 1f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)));
-        //if (base.transform.position.y < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position.y)
-        //{
+        if ((this.currentPlayformId / (BaseSceneManager<Base>.Instance.platforms.Count - 1)) == 1)
+        {
+            //当前平台ID/平台ID总数 == 1 ，说明过关了
+            //this.LevelPassedPin.gameObject.SetActive(true);
+        }
+        //设置刚体的阻力（当受力移动时物体受到的空气阻力。0表示没有空气阻力,极大时使物体立即停止运动。）
+        base.GetComponent<Rigidbody>().drag = Mathf.Lerp(this.startDrag, this.finalDrag, (this.currentPlayformId * 1f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)));
+
+        if (base.transform.position.y < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position.y)
+        {
         //    this.pass.pitch = 1f + ((this.scoreInRow * 0.2f) / ((float)(Base.currentLevel + 1)));
         //    this.pass.Play();
         //    base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
@@ -128,7 +132,7 @@ public class mc : BaseSceneManager<mc>
         //        score += this.scoreInRow;
         //    }
         //    this.currentPlatform = null;
-        //}
+        }
         //if (this.scoreInRow > ((Base.currentLevel + 1) * 2))
         //{
         //    this.psBurn.gameObject.SetActive(true);
@@ -139,14 +143,14 @@ public class mc : BaseSceneManager<mc>
         //    this.psBurn.gameObject.SetActive(false);
         //    this.psBurn1.gameObject.SetActive(false);
         //}
-        //if (this.scoreNow == 0)
-        //{
-        //    this.mat.bounciness = 0f;
-        //}
-        //else
-        //{
-        //    this.mat.bounciness = 0.9f;
-        //}
+        if (this.scoreNow == 0)
+        {
+            this.mat.bounciness = 0f;//反弹力
+        }
+        else
+        {
+            this.mat.bounciness = 0.9f;//反弹力
+        }
     }
 
     private void Awake()
@@ -211,7 +215,7 @@ public class mc : BaseSceneManager<mc>
     {
         //this.extraSplash.Play();
         //base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
-        //score += this.scoreInRow;
+        score += this.scoreInRow;
         //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f))).GetComponent<ParticleSystem>().Play();
         //for (int i = 0; i < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.childCount; i++)
         //{
@@ -219,7 +223,7 @@ public class mc : BaseSceneManager<mc>
         //}
         //base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
         //TapticManager.Impact(ImpactFeedback.Midium);
-        //this.splash.Play();
+        this.splash.Play();
         this.setUpvelocity = true;
         //this.anim.Play("Base Layer.Splash", 0, 0f);
         this.currentPlayformId++;
@@ -289,10 +293,12 @@ public class mc : BaseSceneManager<mc>
         if (other.collider.tag == "Finish")
         {
             //赢了
-            //this.Win();
+            UnityEngine.Debug.Log("Finish , you are win");
+            this.Win();
             this.scoreInRow = 0;
         }
         else if (this.currentPlatform != other.collider.transform) {
+            //当前位置不等于碰撞的坐标
             this.currentPlatform = other.collider.transform;
             if (this.scoreInRow > ((Base.currentLevel + 1) * 3))
             {
@@ -306,28 +312,30 @@ public class mc : BaseSceneManager<mc>
                 //obj2.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
                 //obj2.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
                 //TapticManager.Impact(ImpactFeedback.Midium);
-                //this.splash.Play();
+                this.splash.Play();
                 this.setUpvelocity = true;
                 //this.anim.Play("Base Layer.Splash", 0, 0f);
             }
         }
         else
         {
+            UnityEngine.Debug.Log("还在当前台面");
             this.scoreInRow = Base.currentLevel + 1;
-            //GameObject obj3 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
-            //obj3.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-            //obj3.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+            //贴图，震动
+            GameObject obj3 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+            obj3.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+            obj3.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
             //TapticManager.Impact(ImpactFeedback.Light);
             this.setUpvelocity = true;
             //this.anim.Play("Base Layer.Splash", 0, 0f);
-            //if (this.scoreNow == 0)
-            //{
-            //    this.Fail();
-            //}
-            //else
-            //{
-            //    this.splash.Play();
-            //}
+            if (this.scoreNow == 0)
+            {
+                this.Fail();
+            }
+            else
+            {
+                this.splash.Play();
+            }
         }
         //this.psSplash.Play();
     }
