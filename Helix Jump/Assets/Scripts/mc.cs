@@ -16,11 +16,14 @@ public class mc : BaseSceneManager<mc>
     public GameObject AnimatedButton;//
     public Text best;//最好成绩
     public GameObject bestUI;//最好成绩的UI
+    //
     public GameObject canvas;//画布
+    //
     public int currency;//金币
     public List<int> currencyList;
-    public Text currencyText;//文本：当前金币
+    public Text currencyText;//文本：当前文本
     public GameObject currencyUI;//UI：当前金币
+    //
     public int currentObjectLevel;//当前等级
     public Transform currentPlatform;//当前平台坐标
     public int currentPlayformId;//当前平台ID
@@ -50,7 +53,7 @@ public class mc : BaseSceneManager<mc>
     public ParticleSystem psBurn1;
     public GameObject psPickup;
     public ParticleSystem psSplash;//粒子效果
-    public GameObject restartMenu;
+    public GameObject restartMenu;//重新开始菜单（完成）
     public Text restartPercentage;
     private bool reviveShown;
     public static int score;
