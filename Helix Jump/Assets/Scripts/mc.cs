@@ -145,11 +145,11 @@ public class mc : BaseSceneManager<mc>
         //}
         if (this.scoreNow == 0)
         {
-            this.mat.bounciness = 0f;//反弹力
+            //this.mat.bounciness = 0f;//反弹力
         }
         else
         {
-            this.mat.bounciness = 0.9f;//反弹力
+            //this.mat.bounciness = 0.9f;//反弹力
         }
     }
 
@@ -308,9 +308,11 @@ public class mc : BaseSceneManager<mc>
             else
             {
                 this.scoreInRow = Base.currentLevel + 1;
-                //GameObject obj2 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
-                //obj2.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-                //obj2.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+                //贴图
+                GameObject obj2 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+                obj2.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+                obj2.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+                //震动
                 //TapticManager.Impact(ImpactFeedback.Midium);
                 this.splash.Play();
                 this.setUpvelocity = true;
@@ -321,10 +323,11 @@ public class mc : BaseSceneManager<mc>
         {
             UnityEngine.Debug.Log("还在当前台面");
             this.scoreInRow = Base.currentLevel + 1;
-            //贴图，震动
+            //贴图
             GameObject obj3 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
             obj3.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
             obj3.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+            //震动
             //TapticManager.Impact(ImpactFeedback.Light);
             this.setUpvelocity = true;
             //this.anim.Play("Base Layer.Splash", 0, 0f);
