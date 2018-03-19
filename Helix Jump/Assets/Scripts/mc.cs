@@ -34,10 +34,10 @@ public class mc : BaseSceneManager<mc>
     public GameType gameId;
     public bool isActive = true;
     public bool isGameStarted;
-    public Text levelFrom;
+    public Text levelFrom;//当前等级
     public Image LevelPassedPin;
     public Text levelText;//文字：过关，等级提升
-    public Text levelTo;
+    public Text levelTo;//下一等级
     public GameObject levelUpButton;
     public Text levelUpText;
     public PhysicMaterial mat;//物理反弹力
@@ -86,8 +86,8 @@ public class mc : BaseSceneManager<mc>
         //this.UpdateObjects();
         this.currentPlatform = null;
         this.best.text = "best: " + PlayerPrefs.GetInt("bestScore");
-        //this.levelFrom.text = (Base.currentLevel + 1).ToString();
-        //this.levelTo.text = (Base.currentLevel + 2).ToString();
+        this.levelFrom.text = (Base.currentLevel + 1).ToString();
+        this.levelTo.text = (Base.currentLevel + 2).ToString();
         ////FB.Init(new InitDelegate(this.InitCallback), null, null);
         //this.SocialAuthenticate();
         //VoodooSauce.OnGameStarted();
@@ -110,6 +110,7 @@ public class mc : BaseSceneManager<mc>
 
         if (base.transform.position.y < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position.y)
         {
+            //定位
         //    this.pass.pitch = 1f + ((this.scoreInRow * 0.2f) / ((float)(Base.currentLevel + 1)));
         //    this.pass.Play();
         //    base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
@@ -133,16 +134,16 @@ public class mc : BaseSceneManager<mc>
         //    }
         //    this.currentPlatform = null;
         }
-        //if (this.scoreInRow > ((Base.currentLevel + 1) * 2))
-        //{
+        if (this.scoreInRow > ((Base.currentLevel + 1) * 2))
+        {
         //    this.psBurn.gameObject.SetActive(true);
         //    this.psBurn1.gameObject.SetActive(true);
-        //}
-        //else
-        //{
+        }
+        else
+        {
         //    this.psBurn.gameObject.SetActive(false);
         //    this.psBurn1.gameObject.SetActive(false);
-        //}
+        }
         if (this.scoreNow == 0)
         {
             //this.mat.bounciness = 0f;//反弹力
@@ -155,14 +156,14 @@ public class mc : BaseSceneManager<mc>
 
     private void Awake()
     {
-        //BaseGameManager<AdsManager>.GetInstance();
-        //for (int i = 0; i < 4; i++)
-        //{
+        BaseGameManager<AdsManager>.GetInstance();
+        for (int i = 0; i < 4; i++)
+        {
             //if (this.versionNames[i] == VoodooSauce.GetPlayerCohort())
             //{
             //    this.gameId = (GameType)i;
             //}
-        //}
+        }
     }
 
     //增加金币
@@ -217,10 +218,10 @@ public class mc : BaseSceneManager<mc>
         //base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
         score += this.scoreInRow;
         //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f))).GetComponent<ParticleSystem>().Play();
-        //for (int i = 0; i < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.childCount; i++)
-        //{
+        for (int i = 0; i < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.childCount; i++)
+        {
         //    BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.GetChild(i).GetComponent<MeshRenderer>().material = this.mcMat;
-        //}
+        }
         //base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
         //TapticManager.Impact(ImpactFeedback.Midium);
         this.splash.Play();
@@ -310,9 +311,9 @@ public class mc : BaseSceneManager<mc>
             {
                 this.scoreInRow = Base.currentLevel + 1;
                 //贴图
-                GameObject obj2 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
-                obj2.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-                obj2.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+                GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+                decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+                decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
                 //震动
                 //TapticManager.Impact(ImpactFeedback.Midium);
                 this.splash.Play();
@@ -325,9 +326,9 @@ public class mc : BaseSceneManager<mc>
             UnityEngine.Debug.Log("还在当前台面");
             this.scoreInRow = Base.currentLevel + 1;
             //贴图
-            GameObject obj3 = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
-            obj3.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-            obj3.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+            GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+            decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+            decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
             //震动
             //TapticManager.Impact(ImpactFeedback.Light);
             this.setUpvelocity = true;
