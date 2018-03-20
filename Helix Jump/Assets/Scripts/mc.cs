@@ -45,8 +45,8 @@ public class mc : BaseSceneManager<mc>
     public Text newRecord;//新记录
     public List<GameObject> objects;//游戏块
     public AudioSource pass;//音乐播放：通过
-    public GameObject plusAwesomePrefab;
-    public GameObject plusPrefab;
+    public GameObject plusAwesomePrefab;//Prefab：Awesome的上升动画
+    public GameObject plusPrefab;//Prefab：加分的上升动画
     public Image progression;//进展图片
     public ParticleSystem psBurn;//粒子效果：燃烧
     public ParticleSystem psBurn1;//粒子效果：燃烧1
@@ -120,7 +120,7 @@ public class mc : BaseSceneManager<mc>
             if ((this.currentPlatform == null) || (this.currentPlatform.transform.parent != BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform))
             {
                 //收集
-                //        UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+                //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
                 this.currentPlayformId++;
                 base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
                 score += this.scoreInRow;
@@ -128,7 +128,7 @@ public class mc : BaseSceneManager<mc>
             }
             else
             {
-                //        UnityEngine.Object.Instantiate<GameObject>(this.psPickup, this.currentPlatform.transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+                //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, this.currentPlatform.transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
                 this.currentPlayformId++;
                 this.scoreInRow = Base.currentLevel + 1;
                 base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
@@ -204,7 +204,7 @@ public class mc : BaseSceneManager<mc>
         {
             //恢复显示，弹广告
             this.reviveShown = true;
-            BaseSceneManager<UI>.Instance.ShowRevive();
+            //BaseSceneManager<UI>.Instance.ShowRevive();
         }
         this.ReportScore((float)score);
         ////VoodooSauce.OnGameFinished((float)score);
@@ -265,6 +265,7 @@ public class mc : BaseSceneManager<mc>
         {
             if (this.currentObjectLevel >= this.objects.Count)
             {
+                //点击商店
                 BaseSceneManager<UI>.Instance.ShopClicked();
             }
             else
@@ -374,6 +375,7 @@ public class mc : BaseSceneManager<mc>
         //base.StartCoroutine(this.AddMoneyRestartCoroutine());
     }
 
+    //死亡后恢复比赛
     public void Revive()
     {
         base.transform.localScale = new Vector3(1.816f, 1.816f, 1.816f);
@@ -495,9 +497,51 @@ public class mc : BaseSceneManager<mc>
         }
     }
 
+    //摧毁当前平台
     private IEnumerator destroyLayerCoroutine(GameObject layer)
     {
         UnityEngine.Debug.Log("destroyLayerCoroutine"); // 这里只是进来一次  
+        //平台的子类块列表
+        List<Transform> objectList = new List<Transform>();
+        float speed = 0f;//速度
+        float time = 0f;//时间
+        //if (this.gameId == GameType.GAME_ANIM)
+        //{
+        //    BaseSceneManager<UI>.Instance.psGrow.Play();
+        //    BaseSceneManager<UI>.Instance.blimAnimator.Play("Base Layer.Blim", 0, 0f);
+        //}
+        if (layer.GetComponent<Animator>() != null)
+        {
+            layer.GetComponent<Animator>().enabled = false;
+        }
+        //获取到这个平台的子类块，添加到列表中
+        for (int j = 0; j< layer.transform.childCount; j++)
+        {
+            objectList.Add(layer.transform.GetChild(j));
+        }
+        //设置块的父亲节点为空
+        for (int k = 0; k< objectList.Count; k++)
+        {
+            objectList[k].parent = null;
+        }
+        //
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            speed += Time.deltaTime * Physics.gravity.y;
+            for (int m = 0; m < objectList.Count; m++)
+            {
+                Vector3 vector2 = (Vector3)((objectList[m].forward * Time.deltaTime) * 100f);
+                Transform objectItem = objectList[m];
+                objectItem.position += new Vector3(vector2.x, speed * Time.deltaTime, vector2.z);
+                objectItem.Rotate((float)(45f * Time.deltaTime), 90f * Time.deltaTime, (float)(20f * Time.deltaTime));
+            }
+        }
+        //for (int i = 0; i < objectList.Count; i++)
+        //{
+        //    objectList[i].gameObject.SetActive(false);
+        //}
+        //layer.SetActive(false);
         yield return null; //下一帧调用, 什么都不做
     }
 

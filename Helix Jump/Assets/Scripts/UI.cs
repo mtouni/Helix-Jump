@@ -143,16 +143,18 @@ public class UI : BaseSceneManager<UI>
 
     private void Update()
     {
-        //float t = (BaseSceneManager<mc>.Instance.currentPlayformId * 1f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1));
-        //BaseSceneManager<mc>.Instance.progression.fillAmount = t;
+        float t = (BaseSceneManager<mc>.Instance.currentPlayformId * 1f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1));
+        BaseSceneManager<mc>.Instance.progression.fillAmount = t;
         //BaseSceneManager<mc>.Instance.progression.set_color(Color.Lerp(this.colorStart, this.colorEnd, t));
         //this.pointStart.GetComponent<Image>().set_color(Color.Lerp(this.colorStart, this.colorEnd, t));
+        //BaseSceneManager<mc>.Instance.progression.color = Color.Lerp(this.colorStart, this.colorEnd, t);
+        //this.pointStart.GetComponent<Image>().color = Color.Lerp(this.colorStart, this.colorEnd, t);
         //this.psGrow.main.startColor = Color.Lerp(this.colorStart, this.colorEnd, t);
         //this.psGrow.transform.position = Vector3.Lerp(Camera.main.ScreenToWorldPoint(this.pointStart.position + new Vector3(0f, 0f, 1f)), Camera.main.ScreenToWorldPoint(this.pointEnd.position + new Vector3(0f, 0f, 1f)), t + 0.01f);
-        //if (t > 0.7f)
-        //{
+        if (t > 0.7f)
+        {
         //    this.blimAnimator.enabled = true;
-        //}
+        }
     }
 
     public void WheelofFortune()
