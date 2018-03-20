@@ -9,33 +9,33 @@ using UnityEngine.UI;
 
 public class UI : BaseSceneManager<UI>
 {
-    public Animator blimAnimator;
-    public AudioSource click;
-    public Color colorEnd;
-    public Color colorStart;
+    public Animator blimAnimator;//溢出动画
+    public AudioSource click;//点击声音
+    public Color colorEnd;//结束的颜色
+    public Color colorStart;//开始的颜色
     public Image filledImage;
     public GameObject fortuneSpinButtonRounded;
-    public GameObject gcButton;
-    public GameObject MM;
-    public GameObject noadsButton;
-    public Transform pointEnd;
-    public Transform pointStart;
+    public GameObject gcButton;//按钮：游戏中心
+    public GameObject MM;//管理菜单
+    public GameObject noadsButton;//按钮：去广告
+    public Transform pointEnd;//结束的点
+    public Transform pointStart;//开始的点
     public GameObject prizeBGRounded;
     public Text prizeMoneyTextRounded;
     public AudioSource prizeSound;
     public ParticleSystem psGrow;
-    public GameObject restoreButton;
-    public GameObject reviveBlock;
-    public GameObject shopButton;
-    public Animator skinsComingSoon;
-    public GameObject soundButton;
+    public GameObject restoreButton;//按钮：恢复
+    public GameObject reviveBlock;//恢复
+    public GameObject shopButton;//按钮：商店
+    public Animator skinsComingSoon;//按钮：Skin
+    public GameObject soundButton;//按钮：声音
     public GameObject SpinWheel;
-    public GameObject spinWheelRounded;
+    public GameObject spinWheelRounded;//圆形的SpinWheel
 
     public void BuyNoAds()
     {
         this.click.Play();
-        //BaseGameManager<AdsManager>.GetInstance().BuyNoAds();
+        BaseGameManager<AdsManager>.GetInstance().BuyNoAds();
     }
 
     //播放
@@ -67,6 +67,7 @@ public class UI : BaseSceneManager<UI>
         }
     }
 
+    //点击：设置
     public void SettingsClicked()
     {
         if (this.restoreButton.activeInHierarchy)
@@ -85,12 +86,13 @@ public class UI : BaseSceneManager<UI>
             this.shopButton.SetActive(false);
             this.gcButton.SetActive(true);
         }
-        this.click.Play();
+        //this.click.Play();
     }
 
+    //点击：商店
     public void ShopClicked()
     {
-        this.skinsComingSoon.Play("Base Layer.comingSoon", 0, 0f);
+        //this.skinsComingSoon.Play("Base Layer.comingSoon", 0, 0f);
     }
 
     public void ShowGC()
@@ -106,12 +108,13 @@ public class UI : BaseSceneManager<UI>
     //显示恢复，弹广告
     public void ShowRevive()
     {
-        //if (BaseGameManager<AdsManager>.GetInstance().IsVideoReady())
-        //{
+        if (BaseGameManager<AdsManager>.GetInstance().IsVideoReady())
+        {
         //    base.StartCoroutine(this.reviveCoroutine());
-        //}
+        }
     }
 
+    //点击按钮：声音
     public void SoundsClicked()
     {
         bool flag = !PlayerPrefs.HasKey("soundsOn") || (PlayerPrefs.GetInt("soundsOn") == 1);
@@ -121,6 +124,7 @@ public class UI : BaseSceneManager<UI>
         this.click.Play();
     }
 
+    //旋转
     public void Spin()
     {
         //base.StartCoroutine(this.SpinCoroutine());

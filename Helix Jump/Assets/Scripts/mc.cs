@@ -47,7 +47,7 @@ public class mc : BaseSceneManager<mc>
     public AudioSource pass;//音乐播放：通过
     public GameObject plusAwesomePrefab;
     public GameObject plusPrefab;
-    public Image progression;
+    public Image progression;//进展图片
     public ParticleSystem psBurn;//粒子效果：燃烧
     public ParticleSystem psBurn1;//粒子效果：燃烧1
     public GameObject psPickup;
@@ -115,7 +115,7 @@ public class mc : BaseSceneManager<mc>
             //    this.pass.Play();
             //摧毁面板
             base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
-            //    BaseSceneManager<UI>.Instance.Play();
+            BaseSceneManager<UI>.Instance.Play();
             //    this.bestUI.SetActive(false);
             if ((this.currentPlatform == null) || (this.currentPlatform.transform.parent != BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform))
             {
@@ -206,7 +206,7 @@ public class mc : BaseSceneManager<mc>
             this.reviveShown = true;
             BaseSceneManager<UI>.Instance.ShowRevive();
         }
-        //this.ReportScore((float)score);
+        this.ReportScore((float)score);
         ////VoodooSauce.OnGameFinished((float)score);
         //新记录诞生
         if (PlayerPrefs.GetInt("bestScore") < score)
@@ -258,6 +258,7 @@ public class mc : BaseSceneManager<mc>
         }
     }
 
+    //等级提升
     public void LevelUp()
     {
         if (this.currency >= this.currencyList[this.currentObjectLevel])
@@ -359,6 +360,7 @@ public class mc : BaseSceneManager<mc>
         UnityEngine.Debug.Log("Post finished: " + success.ToString());
     }
 
+    //上传分数
     private void ReportScore(float score)
     {
         UnityEngine.Debug.Log("Report Score: " + score.ToString());
@@ -452,6 +454,45 @@ public class mc : BaseSceneManager<mc>
         }
         this.levelText.text = "Level " + ((Base.currentLevel + 1)).ToString() + " passed";
         //base.StartCoroutine(this.NextLevel());
+    }
+
+    //添加金币重启
+    private IEnumerator AddMoneyRestartCoroutine()
+    {
+        int scoreAdd;//添加的分数
+        scoreAdd = mc.score / 50;
+        if ((scoreAdd <= 0) || (this.gameId != GameType.GAME_WORLD))
+        {
+          
+        }
+        else
+        {
+            BaseSceneManager<UI>.Instance.reviveBlock.SetActive(false);
+            this.newRecord.gameObject.SetActive(false);
+            this.restartPercentage.gameObject.SetActive(false);
+            this.AddMoneyRestartText.text = "+" + scoreAdd.ToString();
+            this.AddMoneyRestart.SetActive(true);
+            this.AddMoneyRestartSound.Play();
+            yield return new WaitForSeconds(0.5f); ; //下一帧调用, 什么都不做
+
+            this.AddMoney(scoreAdd);
+            yield return new WaitForSeconds(0.5f); ; //下一帧调用, 什么都不做
+
+            if (PlayerPrefs.HasKey("sessionsCount"))
+            {
+                this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
+                this.sessionsCount++;
+                PlayerPrefs.SetInt("sessionsCount", this.sessionsCount);
+            }
+            else
+            {
+                this.sessionsCount++;
+                PlayerPrefs.SetInt("sessionsCount", this.sessionsCount);
+            }
+            mc.score = 0;
+            BaseGameManager<AdsManager>.GetInstance().ShowInterstitial();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     private IEnumerator destroyLayerCoroutine(GameObject layer)
