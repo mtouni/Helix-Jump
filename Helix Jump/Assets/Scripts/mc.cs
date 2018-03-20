@@ -42,7 +42,7 @@ public class mc : BaseSceneManager<mc>
     public Text levelUpText;
     public PhysicMaterial mat;//物理反弹力
     public Material mcMat;
-    public Text newRecord;
+    public Text newRecord;//新记录
     public List<GameObject> objects;//游戏块
     public AudioSource pass;//音乐播放：通过
     public GameObject plusAwesomePrefab;
@@ -53,15 +53,15 @@ public class mc : BaseSceneManager<mc>
     public GameObject psPickup;
     public ParticleSystem psSplash; ///粒子效果
     public GameObject restartMenu;/// 重新开始菜单（完成）
-    public Text restartPercentage;
-    private bool reviveShown;
+    public Text restartPercentage;//重新开始：完成百分比
+    private bool reviveShown;//是否恢复显示，弹广告
     private static int score = 0;//分数
-    public int scoreInRow = 1;
-    public int scoreNow = 3;
+    public int scoreInRow = 1;//当前这行的分数
+    public int scoreNow = 3;//当前的分数
     //
     public Text scoreNowText;
     public Text scoreText;//当前分数
-    private int sessionsCount;
+    private int sessionsCount;//会话次数（用户弹出评分框）
     private bool setUpvelocity;//是否需要弹起来
     public AudioSource splash;//音乐播放：球落地水花溅开
     public float startDrag;//开始时候的阻力：
@@ -78,10 +78,10 @@ public class mc : BaseSceneManager<mc>
         this.currentObjectLevel = PlayerPrefs.GetInt("currentObjectLevel");
         if (this.gameId == GameType.GAME_WORLD)
         {
-        //    this.currencyUI.SetActive(true);
-        //    this.levelUpButton.SetActive(true);
-        //    this.currency = PlayerPrefs.GetInt("currency");
-        //    this.currencyText.text = this.currency.ToString();
+            //    this.currencyUI.SetActive(true);
+            //    this.levelUpButton.SetActive(true);
+            //    this.currency = PlayerPrefs.GetInt("currency");
+            //    this.currencyText.text = this.currency.ToString();
         }
         //this.UpdateObjects();
         this.currentPlatform = null;
@@ -111,38 +111,40 @@ public class mc : BaseSceneManager<mc>
         if (base.transform.position.y < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position.y)
         {
             //定位
-        //    this.pass.pitch = 1f + ((this.scoreInRow * 0.2f) / ((float)(Base.currentLevel + 1)));
-        //    this.pass.Play();
-        //    base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
-        //    BaseSceneManager<UI>.Instance.Play();
-        //    this.bestUI.SetActive(false);
-        //    if ((this.currentPlatform == null) || (this.currentPlatform.transform.parent != BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform))
-        //    {
-        //        UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
-        //        this.currentPlayformId++;
-        //        base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
-        //        score += this.scoreInRow;
-        //        this.scoreInRow += Base.currentLevel + 1;
-        //    }
-        //    else
-        //    {
-        //        UnityEngine.Object.Instantiate<GameObject>(this.psPickup, this.currentPlatform.transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
-        //        this.currentPlayformId++;
-        //        this.scoreInRow = Base.currentLevel + 1;
-        //        base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
-        //        score += this.scoreInRow;
-        //    }
-        //    this.currentPlatform = null;
+            //    this.pass.pitch = 1f + ((this.scoreInRow * 0.2f) / ((float)(Base.currentLevel + 1)));
+            //    this.pass.Play();
+            //摧毁面板
+            base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
+            //    BaseSceneManager<UI>.Instance.Play();
+            //    this.bestUI.SetActive(false);
+            if ((this.currentPlatform == null) || (this.currentPlatform.transform.parent != BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform))
+            {
+                //收集
+                //        UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+                this.currentPlayformId++;
+                base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
+                score += this.scoreInRow;
+                this.scoreInRow += Base.currentLevel + 1;
+            }
+            else
+            {
+                //        UnityEngine.Object.Instantiate<GameObject>(this.psPickup, this.currentPlatform.transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+                this.currentPlayformId++;
+                this.scoreInRow = Base.currentLevel + 1;
+                base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
+                score += this.scoreInRow;
+            }
+            this.currentPlatform = null;
         }
         if (this.scoreInRow > ((Base.currentLevel + 1) * 2))
         {
-        //    this.psBurn.gameObject.SetActive(true);
-        //    this.psBurn1.gameObject.SetActive(true);
+            //    this.psBurn.gameObject.SetActive(true);
+            //    this.psBurn1.gameObject.SetActive(true);
         }
         else
         {
-        //    this.psBurn.gameObject.SetActive(false);
-        //    this.psBurn1.gameObject.SetActive(false);
+            //    this.psBurn.gameObject.SetActive(false);
+            //    this.psBurn1.gameObject.SetActive(false);
         }
         if (this.scoreNow == 0)
         {
@@ -159,6 +161,7 @@ public class mc : BaseSceneManager<mc>
         BaseGameManager<AdsManager>.GetInstance();
         for (int i = 0; i < 4; i++)
         {
+            //
             //if (this.versionNames[i] == VoodooSauce.GetPlayerCohort())
             //{
             //    this.gameId = (GameType)i;
@@ -187,42 +190,45 @@ public class mc : BaseSceneManager<mc>
         this.restartMenu.SetActive(true);
         //this.death.Play();
         //base.transform.localScale = new Vector3(2.3f, 1.7f, 2.3f);
-        //this.restartPercentage.text = ((int)((BaseSceneManager<mc>.Instance.currentPlayformId * 100f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)))).ToString("D") + "% Completed!";
-        //if (PlayerPrefs.HasKey("sessionsCount"))
-        //{
-        //    this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
-        //}
-        //if (((this.sessionsCount == 5) || (this.sessionsCount == 0x19)) || (((this.sessionsCount == 100) || (this.sessionsCount == 200)) || (this.sessionsCount == 500)))
-        //{
-        //    BaseSceneManager<UI>.Instance.StartRateUs();
-        //}
+        this.restartPercentage.text = ((int)((BaseSceneManager<mc>.Instance.currentPlayformId * 100f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)))).ToString("D") + "% Completed!";
+        if (PlayerPrefs.HasKey("sessionsCount"))
+        {
+            this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
+        }
+        if (((this.sessionsCount == 5) || (this.sessionsCount == 0x19)) || (((this.sessionsCount == 100) || (this.sessionsCount == 200)) || (this.sessionsCount == 500)))
+        {
+            BaseSceneManager<UI>.Instance.StartRateUs();
+        }
         //this.bestUI.SetActive(false);
-        //if (!this.reviveShown)
-        //{
-        //    this.reviveShown = true;
-        //    BaseSceneManager<UI>.Instance.ShowRevive();
-        //}
+        if (!this.reviveShown)
+        {
+            //恢复显示，弹广告
+            this.reviveShown = true;
+            BaseSceneManager<UI>.Instance.ShowRevive();
+        }
         //this.ReportScore((float)score);
         ////VoodooSauce.OnGameFinished((float)score);
-        //if (PlayerPrefs.GetInt("bestScore") < score)
-        //{
-        //    this.newRecord.gameObject.SetActive(true);
-        //    PlayerPrefs.SetInt("bestScore", score);
-        //    this.newRecord.text = "NEW RECORD!\n" + score.ToString();
-        //}
+        //新记录诞生
+        if (PlayerPrefs.GetInt("bestScore") < score)
+        {
+            this.newRecord.gameObject.SetActive(true);
+            PlayerPrefs.SetInt("bestScore", score);
+            this.newRecord.text = "NEW RECORD!\n" + score.ToString();
+        }
     }
 
+    //包里摧毁
     public void ForceDestroy(Transform platform)
     {
         //this.extraSplash.Play();
-        //base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
+        base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
         score += this.scoreInRow;
         //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f))).GetComponent<ParticleSystem>().Play();
         for (int i = 0; i < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.childCount; i++)
         {
-        //    BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.GetChild(i).GetComponent<MeshRenderer>().material = this.mcMat;
+            //    BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.GetChild(i).GetComponent<MeshRenderer>().material = this.mcMat;
         }
-        //base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
+        base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
         //TapticManager.Impact(ImpactFeedback.Midium);
         this.splash.Play();
         this.setUpvelocity = true;
@@ -282,6 +288,7 @@ public class mc : BaseSceneManager<mc>
         {
             if (this.scoreInRow > ((Base.currentLevel + 1) * 3))
             {
+                //如果穿越的平台大于破碎的块数，破碎
                 this.currentPlatform = other.collider.transform;
                 this.scoreInRow = Base.currentLevel + 1;
                 this.ForceDestroy(other.collider.transform.parent);
@@ -299,11 +306,13 @@ public class mc : BaseSceneManager<mc>
             this.Win();
             this.scoreInRow = 0;
         }
-        else if (this.currentPlatform != other.collider.transform) {
+        else if (this.currentPlatform != other.collider.transform)
+        {
             //当前位置不等于碰撞的坐标
             this.currentPlatform = other.collider.transform;
             if (this.scoreInRow > ((Base.currentLevel + 1) * 3))
             {
+                //如果穿越的平台大于破碎的块数，破碎
                 this.ForceDestroy(other.collider.transform.parent);
                 this.scoreInRow = Base.currentLevel + 1;
             }
@@ -443,5 +452,33 @@ public class mc : BaseSceneManager<mc>
         }
         this.levelText.text = "Level " + ((Base.currentLevel + 1)).ToString() + " passed";
         //base.StartCoroutine(this.NextLevel());
+    }
+
+    private IEnumerator destroyLayerCoroutine(GameObject layer)
+    {
+        UnityEngine.Debug.Log("destroyLayerCoroutine"); // 这里只是进来一次  
+        yield return null; //下一帧调用, 什么都不做
+    }
+
+    //加分数的特效
+    private IEnumerator plusCoroutine(int plusScore)
+    {
+        GameObject plusObj = null;
+        GameObject plusAwesomeObj = null;
+        plusObj = UnityEngine.Object.Instantiate<GameObject>(this.plusPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity, this.canvas.transform);
+        plusObj.GetComponent<Animator>().Play("Base Layer.plus", 0, 0f);
+        plusObj.transform.GetChild(0).GetComponent<Text>().text = "+" + plusScore.ToString();
+        if ((this.scoreInRow == ((Base.currentLevel + 1) * 3)) || (this.scoreInRow == ((Base.currentLevel + 1) * 5)))
+        {
+            plusAwesomeObj = UnityEngine.Object.Instantiate<GameObject>(this.plusAwesomePrefab, new Vector3(300f, 0f, 0f), Quaternion.identity, this.canvas.transform);
+            plusAwesomeObj.GetComponent<Animator>().Play("Base Layer.plus", 0, 0f);
+        }
+        yield return new WaitForSeconds(0.95f); ; //下一帧调用, 什么都不做
+        //回收对象
+        UnityEngine.Object.Destroy(plusObj);
+        if (plusAwesomeObj != null)
+        {
+            UnityEngine.Object.Destroy(plusAwesomeObj);
+        }
     }
 }

@@ -38,6 +38,7 @@ public class UI : BaseSceneManager<UI>
         //BaseGameManager<AdsManager>.GetInstance().BuyNoAds();
     }
 
+    //播放
     public void Play()
     {
         BaseSceneManager<mc>.Instance.isGameStarted = true;
@@ -102,6 +103,7 @@ public class UI : BaseSceneManager<UI>
     {
     }
 
+    //显示恢复，弹广告
     public void ShowRevive()
     {
         //if (BaseGameManager<AdsManager>.GetInstance().IsVideoReady())
@@ -129,6 +131,7 @@ public class UI : BaseSceneManager<UI>
         AudioListener.volume = (PlayerPrefs.HasKey("soundsOn") && (PlayerPrefs.GetInt("soundsOn") != 1)) ? 0f : 1f;
     }
 
+    //给我们打分
     public void StartRateUs()
     {
         ShowRateUs();
