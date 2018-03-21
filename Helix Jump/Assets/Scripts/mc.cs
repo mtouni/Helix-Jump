@@ -540,27 +540,33 @@ public class mc : BaseSceneManager<mc>
         //
         while (time < 1f)
         {
+            UnityEngine.Debug.Log("time ： " + time);
             time += Time.deltaTime;
             speed += Time.deltaTime * Physics.gravity.y;
             for (int m = 0; m < objectList.Count; m++)
             {
-                Vector3 vector2 = (Vector3)((objectList[m].forward * Time.deltaTime) * 100f);
                 Transform objectItem = objectList[m];
+                //原
+                //Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 100f);
+                //测试
+                Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 20f);
                 objectItem.position += new Vector3(vector2.x, speed * Time.deltaTime, vector2.z);
                 objectItem.Rotate((float)(45f * Time.deltaTime), 90f * Time.deltaTime, (float)(20f * Time.deltaTime));
+                UnityEngine.Debug.Log("time ： " + time + "; objectItem : " + objectItem + "; objectItem.position : " + objectItem.position);
             }
+            yield return null; //下一帧调用, 什么都不做
         }
-        //for (int i = 0; i < objectList.Count; i++)
-        //{
-        //    objectList[i].gameObject.SetActive(false);
-        //}
-        //layer.SetActive(false);
-        yield return null; //下一帧调用, 什么都不做
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            objectList[i].gameObject.SetActive(false);
+        }
+        layer.SetActive(false);
     }
 
-
+    //下个级别
     private IEnumerator NextLevel()
     {
+
         yield return null;
     }
 
