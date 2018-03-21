@@ -51,7 +51,7 @@ public class mc : BaseSceneManager<mc>
     public ParticleSystem psBurn;//粒子效果：燃烧
     public ParticleSystem psBurn1;//粒子效果：燃烧1
     public GameObject psPickup;
-    public ParticleSystem psSplash; ///粒子效果
+    public ParticleSystem psSplash; ///粒子效果（球和台面碰撞撒出的粒子）
     public GameObject restartMenu;/// 重新开始菜单（完成）
     public Text restartPercentage;//重新开始：完成百分比
     private bool reviveShown;//是否恢复显示，弹广告
@@ -67,6 +67,7 @@ public class mc : BaseSceneManager<mc>
     public float startDrag;//开始时候的阻力：
     public float finalDrag;//结束时候的阻力：
     private string[] versionNames = new string[] { "Base", "WorldBuilder", "ShorterLevels", "Animations" };//版本名称
+    [Header("设置获胜界面")]
     public GameObject winMenu;//获胜界面
 
     // Use this for initialization
@@ -365,7 +366,7 @@ public class mc : BaseSceneManager<mc>
                 this.splash.Play();
             }
         }
-        //this.psSplash.Play();
+        this.psSplash.Play();
     }
 
     public void PostCallback(bool success)
@@ -517,11 +518,11 @@ public class mc : BaseSceneManager<mc>
         List<Transform> objectList = new List<Transform>();
         float speed = 0f;//速度
         float time = 0f;//时间
-        //if (this.gameId == GameType.GAME_ANIM)
-        //{
+        if (this.gameId == GameType.GAME_ANIM)
+        {
         //    BaseSceneManager<UI>.Instance.psGrow.Play();
         //    BaseSceneManager<UI>.Instance.blimAnimator.Play("Base Layer.Blim", 0, 0f);
-        //}
+        }
         if (layer.GetComponent<Animator>() != null)
         {
             layer.GetComponent<Animator>().enabled = false;
