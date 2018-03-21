@@ -15,7 +15,7 @@ public class mc : BaseSceneManager<mc>
     public Animator anim;
     public GameObject AnimatedButton;//
     public Text best;//Text：最好成绩
-    public GameObject bestUI;//最好成绩的UI
+    public GameObject bestUI;//最好成绩的UI（没啥用）
     //
     public GameObject canvas;//画布
     //
@@ -41,7 +41,7 @@ public class mc : BaseSceneManager<mc>
     public GameObject levelUpButton;
     public Text levelUpText;
     public PhysicMaterial mat;//物理反弹力
-    public Material mcMat;
+    public Material mcMat;//材质
     public Text newRecord;//新记录
     public List<GameObject> objects;//游戏块
     public AudioSource pass;//音乐播放：通过
@@ -232,7 +232,7 @@ public class mc : BaseSceneManager<mc>
         //TapticManager.Impact(ImpactFeedback.Midium);
         this.splash.Play();
         this.setUpvelocity = true;
-        //this.anim.Play("Base Layer.Splash", 0, 0f);
+        //this.anim.Play("Base Layer.Splash", 0, 0f);//飞溅开来
         this.currentPlayformId++;
     }
 
@@ -322,9 +322,16 @@ public class mc : BaseSceneManager<mc>
             {
                 this.scoreInRow = Base.currentLevel + 1;
                 //贴图
-                GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+                //原代码
+                //GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+                //decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+                //decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+
+                //测试代码
+                GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 0.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
                 decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
                 decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+
                 //震动
                 //TapticManager.Impact(ImpactFeedback.Midium);
                 this.splash.Play();
@@ -337,7 +344,12 @@ public class mc : BaseSceneManager<mc>
             UnityEngine.Debug.Log("还在当前台面");
             this.scoreInRow = Base.currentLevel + 1;
             //贴图
-            GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+            //原代码
+            //GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+            //decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+            //decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
+            //测试代码
+            GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 0.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
             decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
             decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
             //震动
@@ -455,7 +467,7 @@ public class mc : BaseSceneManager<mc>
             BaseSceneManager<MainCamera>.Instance.GoUp();
         }
         this.levelText.text = "Level " + ((Base.currentLevel + 1)).ToString() + " passed";
-        //base.StartCoroutine(this.NextLevel());
+        base.StartCoroutine(this.NextLevel());
     }
 
     //添加金币重启
@@ -545,6 +557,12 @@ public class mc : BaseSceneManager<mc>
         yield return null; //下一帧调用, 什么都不做
     }
 
+
+    private IEnumerator NextLevel()
+    {
+        yield return null;
+    }
+
     //加分数的特效
     private IEnumerator plusCoroutine(int plusScore)
     {
@@ -558,7 +576,7 @@ public class mc : BaseSceneManager<mc>
             plusAwesomeObj = UnityEngine.Object.Instantiate<GameObject>(this.plusAwesomePrefab, new Vector3(300f, 0f, 0f), Quaternion.identity, this.canvas.transform);
             plusAwesomeObj.GetComponent<Animator>().Play("Base Layer.plus", 0, 0f);
         }
-        yield return new WaitForSeconds(0.95f); ; //下一帧调用, 什么都不做
+        yield return new WaitForSeconds(0.95f);//下一帧调用, 什么都不做
         //回收对象
         UnityEngine.Object.Destroy(plusObj);
         if (plusAwesomeObj != null)

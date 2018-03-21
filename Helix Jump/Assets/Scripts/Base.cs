@@ -50,16 +50,6 @@ public class Base : BaseSceneManager<Base>
         Application.targetFrameRate = 60;
         this.speedHistory = new List<float>();
 
-        //自己加的
-        this.beginCount = new List<int>();
-        this.beginCount.Add(5);
-        this.easyCount = new List<int>();
-        this.easyCount.Add(1);
-        this.midCount = new List<int>();
-        this.midCount.Add(1);
-        this.hardCount = new List<int>();
-        this.hardCount.Add(1);
-
         this.platforms = new List<GameObject>();
 
         this.currentYOffset = 0;

@@ -27,7 +27,23 @@ public class MainCamera : BaseSceneManager<MainCamera>
     {
         if (this.isFolloving)
         {
-            base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -50f);
+            //原
+            //base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -50f);
+            //测试
+            base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -30f);
         }
+    }
+
+    //上升效果
+    private IEnumerator GoUpCoroutine()
+    {
+        float time = 1f;
+        if (time > 0f)
+        {
+            time -= Time.deltaTime;
+            Transform transform = this.transform;
+            transform.position += (Vector3)((Vector3.up * Time.deltaTime) * 15f);
+        }
+        yield return null;
     }
 }
