@@ -1,5 +1,5 @@
 # 基于Unity高仿游戏：Helix Jump
- 
+
 ## 需求
 最近在学习Unity3D开发，于是拿最近很火的游戏Helix Jump练手下，用于慢慢熟悉Unity3D引擎
 
@@ -12,4 +12,5 @@ AppStore下载地址：https://itunes.apple.com/app/id1345968745
 ## 开发环境
 Unity 2017.3.1f
 
-状态：进行中
+## 进度
+基本完成，在进行关卡设计
