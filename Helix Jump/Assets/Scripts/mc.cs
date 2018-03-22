@@ -45,8 +45,10 @@ public class mc : BaseSceneManager<mc>
     public Text newRecord;//新记录
     public List<GameObject> objects;//游戏块
     public AudioSource pass;//音乐播放：通过
-    public GameObject plusAwesomePrefab;//Prefab：Awesome的上升动画
-    public GameObject plusPrefab;//Prefab：加分的上升动画
+    [Tooltip("动画：Awesome动画")]
+    public GameObject plusAwesomePrefab;//动画：Awesome动画
+    [Tooltip("动画：加分动画")]
+    public GameObject plusPrefab;//动画：加分动画
     public Image progression;//进展图片
     public ParticleSystem psBurn;//粒子效果：燃烧
     public ParticleSystem psBurn1;//粒子效果：燃烧1
@@ -388,9 +390,10 @@ public class mc : BaseSceneManager<mc>
         //base.StartCoroutine(this.AddMoneyRestartCoroutine());
     }
 
-    //死亡后恢复比赛
+    //死亡后,恢复比赛
     public void Revive()
     {
+        UnityEngine.Debug.Log("恢复比赛");
         base.transform.localScale = new Vector3(1.816f, 1.816f, 1.816f);
         this.isActive = true;
         base.GetComponent<Rigidbody>().isKinematic = false;
@@ -620,5 +623,6 @@ public class mc : BaseSceneManager<mc>
         {
             UnityEngine.Object.Destroy(plusAwesomeObj);
         }
+        yield return null; //下一帧调用, 什么都不做
     }
 }
