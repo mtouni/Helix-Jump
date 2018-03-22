@@ -488,10 +488,10 @@ public class mc : BaseSceneManager<mc>
             this.AddMoneyRestartText.text = "+" + scoreAdd.ToString();
             this.AddMoneyRestart.SetActive(true);
             this.AddMoneyRestartSound.Play();
-            yield return new WaitForSeconds(0.5f); ; //下一帧调用, 什么都不做
+            yield return new WaitForSeconds(0.5f);
 
             this.AddMoney(scoreAdd);
-            yield return new WaitForSeconds(0.5f); ; //下一帧调用, 什么都不做
+            yield return new WaitForSeconds(0.5f);
 
             if (PlayerPrefs.HasKey("sessionsCount"))
             {
@@ -566,8 +566,38 @@ public class mc : BaseSceneManager<mc>
     //下个级别
     private IEnumerator NextLevel()
     {
+        int i = 0;
+        Dictionary<string, object> properties = new Dictionary<string, object>();
+        float ypos = this.transform.position.y;
+        properties["Level"] = Base.currentLevel;
+        //VoodooSauce.TrackCustomEvent("Level Passed", properties);
+        //等级提升
+        Base.currentLevel++;
+        PlayerPrefs.SetInt("currentLevel", Base.currentLevel);
 
+        if (this.gameId != GameType.GAME_ANIM)
+        {
+            //this.winMenu.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+        }
         yield return null;
+        i++;
+        yield return null;
+        if (this.gameId != GameType.GAME_WORLD)
+        {
+            //BaseGameManager<AdsManager>.GetInstance().ShowInterstitial();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            BaseSceneManager<UI>.Instance.WheelofFortune();//幸运轮
+        }
+        if (i < 10)
+        {
+            //UnityEngine.Object.Instantiate<GameObject>(this.finishPrefab, new Vector3(0f, ypos + (5 * i), 0f), Quaternion.identity);
+            //yield return new WaitForSeconds(0.1f);
+        }
+        
     }
 
     //加分数的特效

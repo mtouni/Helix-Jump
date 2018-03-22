@@ -7,6 +7,7 @@ public class Base : BaseSceneManager<Base>
     public GameObject layers;
     //
     private float constructAngle;//初始化构建角度
+    [Tooltip("初始化构建角度")]
     public float currentAngle;//当前角度
     private float currentAngleRotLocal;//当前角度破的地方
     public float currentAngleSpeed;//当前的角速度
@@ -28,7 +29,7 @@ public class Base : BaseSceneManager<Base>
 
     public AnimationCurve inputCurve;//输入曲线
     public GameObject mainBranch;//中心柱体
-    public float maxRotSpeed;//最大角速度
+    public float maxRotSpeed;//最大转向率
 
     public float minSwipeDistX;//最小拖动距离：X
     public float minSwipeDistY;//最大拖动距离：X
@@ -52,12 +53,7 @@ public class Base : BaseSceneManager<Base>
 
         this.platforms = new List<GameObject>();
 
-        this.currentYOffset = 0;
-        this.currentAngleSpeed = 10;
-
-        this.startPos = layers.transform.localPosition;
-        this.rotateSpeed = 90;
-        this.maxRotSpeed = 180;
+        //this.startPos = layers.transform.localPosition;
         Debug.Log("startPos : " + this.startPos);
 
 

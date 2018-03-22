@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AdsManager : BaseGameManager<AdsManager>
-   // , IPurchaseDelegate
 {
     private float interstitialLastShown = float.NegativeInfinity;
     private float interstitialNotReadyCounter = float.PositiveInfinity;
