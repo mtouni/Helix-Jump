@@ -192,7 +192,7 @@ public class mc : BaseSceneManager<mc>
         base.GetComponent<Rigidbody>().isKinematic = true;//让球不再运动
         this.restartMenu.SetActive(true);
         //this.death.Play();
-        //base.transform.localScale = new Vector3(2.3f, 1.7f, 2.3f);
+        base.transform.localScale = new Vector3(2.3f, 1.7f, 2.3f);
         this.restartPercentage.text = ((int)((BaseSceneManager<mc>.Instance.currentPlayformId * 100f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)))).ToString("D") + "% Completed!";
         if (PlayerPrefs.HasKey("sessionsCount"))
         {
@@ -255,8 +255,9 @@ public class mc : BaseSceneManager<mc>
     {
         if (this.setUpvelocity)
         {
+            //原
             //base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 60f, 0f);
-            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 7f, 0f);
+            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 15f, 0f);
             this.setUpvelocity = false;
         }
     }
@@ -325,16 +326,9 @@ public class mc : BaseSceneManager<mc>
             {
                 this.scoreInRow = Base.currentLevel + 1;
                 //贴图
-                //原代码
-                //GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
-                //decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-                //decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
-
-                //测试代码
-                GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 0.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+                GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
                 decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
                 decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
-
                 //震动
                 //TapticManager.Impact(ImpactFeedback.Midium);
                 this.splash.Play();
@@ -347,12 +341,7 @@ public class mc : BaseSceneManager<mc>
             UnityEngine.Debug.Log("还在当前台面");
             this.scoreInRow = Base.currentLevel + 1;
             //贴图
-            //原代码
-            //GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
-            //decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-            //decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
-            //测试代码
-            GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 0.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
+            GameObject decalObj = UnityEngine.Object.Instantiate<GameObject>(this.decal[UnityEngine.Random.Range(0, this.decal.Count)], new Vector3(base.transform.position.x, this.currentPlatform.transform.position.y + 1.5f, base.transform.position.z), Quaternion.identity, this.currentPlatform);
             decalObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
             decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
             //震动

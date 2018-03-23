@@ -9,13 +9,13 @@ public class MainCamera : BaseSceneManager<MainCamera>
 {
     private bool isFolloving = true;
     public GameObject mc;
+    [Tooltip("摄像机Y方向补偿距离")]
     public float Yoffset;
-
 
     public void GoUp()
     {
         this.isFolloving = false;
-        //base.StartCoroutine(this.GoUpCoroutine());//协同进行
+        base.StartCoroutine(this.GoUpCoroutine());//协同进行
     }
 
     // Use this for initialization
@@ -27,10 +27,7 @@ public class MainCamera : BaseSceneManager<MainCamera>
     {
         if (this.isFolloving)
         {
-            //原
-            //base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -50f);
-            //测试
-            base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -30f);
+            base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -50f);
         }
     }
 

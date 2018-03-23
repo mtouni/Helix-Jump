@@ -78,29 +78,25 @@ public class Base : BaseSceneManager<Base>
             {
                 this.platforms.Add(Object.Instantiate<GameObject>(this.beginModels[Random.Range(0, this.beginModels.Count)], new Vector3(0f, this.currentYOffset, 0f), Quaternion.Euler(new Vector3(0f, this.constructAngle, 0f)), base.transform));
                 this.constructAngle += Mathf.Sign((float)Random.Range(-5, 5)) * Random.Range(20, 60);
-                //this.currentYOffset -= 15f;
-                this.currentYOffset -= 5f;
+                this.currentYOffset -= 15f;
             }
             else if (i < ((this.beginCountConfig[currentLevel] / num) + (this.easyCountConfig[currentLevel] / num)))
             {
                 this.platforms.Add(Object.Instantiate<GameObject>(this.easyModels[Random.Range(0, this.easyModels.Count)], new Vector3(0f, this.currentYOffset, 0f), Quaternion.Euler(new Vector3(0f, this.constructAngle, 0f)), base.transform));
                 this.constructAngle += Mathf.Sign((float)Random.Range(-5, 5)) * Random.Range(60, 80);
-                //this.currentYOffset -= 15f;
-                this.currentYOffset -= 5f;
+                this.currentYOffset -= 15f;
             }
             else if (i < (((this.beginCountConfig[currentLevel] / num) + (this.easyCountConfig[currentLevel] / num)) + (this.midCountConfig[currentLevel] / num)))
             {
                 this.constructAngle += Mathf.Sign((float)Random.Range(-5, 5)) * Random.Range(80, 120);
                 this.platforms.Add(Object.Instantiate<GameObject>(this.midModels[Random.Range(0, this.midModels.Count)], new Vector3(0f, this.currentYOffset, 0f), Quaternion.Euler(new Vector3(0f, this.constructAngle, 0f)), base.transform));
-                //this.currentYOffset -= 17.5f;
-                this.currentYOffset -= 5f;
+                this.currentYOffset -= 17.5f;
             }
             else if (i < ((((this.beginCountConfig[currentLevel] / num) + (this.easyCountConfig[currentLevel] / num)) + (this.midCountConfig[currentLevel] / num)) + (this.hardCountConfig[currentLevel] / num)))
             {
                 this.constructAngle += Mathf.Sign((float)Random.Range(-5, 5)) * Random.Range(90, 180);
                 this.platforms.Add(Object.Instantiate<GameObject>(this.hardModels[Random.Range(0, this.hardModels.Count)], new Vector3(0f, this.currentYOffset, 0f), Quaternion.Euler(new Vector3(0f, this.constructAngle, 0f)), base.transform));
-                //this.currentYOffset -= 18f;
-                this.currentYOffset -= 5f;
+                this.currentYOffset -= 18f;
             }
             else
             {
@@ -109,10 +105,8 @@ public class Base : BaseSceneManager<Base>
             }
         }
         //初始化圆柱位置和放大比例
-        //this.mainBranch.transform.position = new Vector3(0f, 45f + (this.currentYOffset / 2f), 0f);
-        //this.mainBranch.transform.localScale = new Vector3(9.9f, (90f - this.currentYOffset) / 2f, 9.9f);
-        //测试代码
-        this.mainBranch.transform.localScale = new Vector3(4f, (this.currentYOffset), 4f);
+        this.mainBranch.transform.position = new Vector3(0f, 45f + (this.currentYOffset / 2f), 0f);
+        this.mainBranch.transform.localScale = new Vector3(9.9f, (90f - this.currentYOffset) / 2f, 9.9f);
     }
 
     //复活，恢复游戏
