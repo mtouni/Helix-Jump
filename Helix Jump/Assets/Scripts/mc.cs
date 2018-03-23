@@ -28,7 +28,8 @@ public class mc : BaseSceneManager<mc>
     public Transform currentPlatform;//当前平台坐标
     public int currentPlayformId;//当前平台ID
     public AudioSource death;//音效：死亡
-    public List<GameObject> decal;//贴花纸
+    [Tooltip("球落地痕迹")]
+    public List<GameObject> decal;//球落地痕迹
     public ParticleSystem extraSplash;
     public GameObject finishPrefab;//完成比赛的Prefab
     public GameType gameId;
@@ -96,8 +97,6 @@ public class mc : BaseSceneManager<mc>
         //VoodooSauce.OnGameStarted();
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         //this.scoreNowText.text = this.scoreNow.ToString();
@@ -257,7 +256,7 @@ public class mc : BaseSceneManager<mc>
         {
             //原
             //base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 60f, 0f);
-            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 15f, 0f);
+            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 25f, 0f);
             this.setUpvelocity = false;
         }
     }
@@ -539,9 +538,9 @@ public class mc : BaseSceneManager<mc>
             {
                 Transform objectItem = objectList[m];
                 //原
-                //Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 100f);
+                Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 100f);
                 //测试
-                Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 20f);
+                //Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 20f);
                 objectItem.position += new Vector3(vector2.x, speed * Time.deltaTime, vector2.z);
                 objectItem.Rotate((float)(45f * Time.deltaTime), 90f * Time.deltaTime, (float)(20f * Time.deltaTime));
                 UnityEngine.Debug.Log("time ： " + time + "; objectItem : " + objectItem + "; objectItem.position : " + objectItem.position);
