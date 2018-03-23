@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Base : BaseSceneManager<Base>
 {
-    //
+    //私有变量
     private float constructAngle;//构建角度
-    [Header("基础配置")]
+    private List<float> speedHistory;//速度历史
+    private Vector2 startPosition;//开始点的坐标
+    //公开变量
+    [Header("基础信息（测试预览）")]
     [Tooltip("当前角度")]
     public float currentAngle;
-    [Tooltip("当前角度破的地方")]
-    private float currentAngleRotLocal;//当前角度破的地方
+    //private float currentAngleRotLocal;//当前角度旋转
     [Tooltip("当前的角速度")]
     public float currentAngleSpeed;//当前的角速度
     [Tooltip("当前的游戏等级")]
     public static int currentLevel = 0;//当前的游戏等级
     public float currentYOffset;//当前Y轴的偏离距离
+    [Header("圆台")]
+    public List<GameObject> platforms;//平台列表
+
     [Header("圆台模型配置")]
     public List<GameObject> beginModels;//圆台模型：开始
     public List<GameObject> easyModels;//圆台模型：简单难度
@@ -27,20 +32,18 @@ public class Base : BaseSceneManager<Base>
     public List<int> easyCountConfig;//圆台数量配置：简单难度 
     public List<int> midCountConfig;//圆台数量配置：中等难度
     public List<int> hardCountConfig;//圆台数量配置：困难难度
-    [Header("圆台")]
-    public List<GameObject> platforms;//平台列表
-
-    public AnimationCurve inputCurve;//输入曲线
+    [Tooltip("中心柱体")]
     public GameObject mainBranch;//中心柱体
-    public float maxRotSpeed;//最大转向率
-
-    public float minSwipeDistX;//最小拖动距离：X
-    public float minSwipeDistY;//最大拖动距离：X
-
-    public float rotateSpeed;//旋转速度
-    private List<float> speedHistory;//速度历史
-    private Vector2 startPos;//开始点的坐标
+    [Tooltip("恢复比赛后第一块平台")]
     public GameObject reviveBlock;//恢复块
+
+    [Header("参数")]
+    [Tooltip("最大旋转速度")]
+    public float maxRotateSpeed;//最大旋转速度
+    [Tooltip("旋转速度")]
+    public float rotateSpeed;//旋转速度
+    public float minSwipeDistX;//最小拖动距离：X
+    public float minSwipeDistY;//最小拖动距离：X
 
     private void Awake()
     {
@@ -116,17 +119,22 @@ public class Base : BaseSceneManager<Base>
     public void Revive(int index)
     {
         this.currentAngle = 0f;
+        //添加保护平台
         this.platforms.Insert(index, Object.Instantiate<GameObject>(this.reviveBlock, new Vector3(0f, this.platforms[index].transform.position.y, 0f), Quaternion.Euler(new Vector3(0f, 50f, 0f)), base.transform));
     }
     
-    void Update () {
+    void Update()
+    {
         if (BaseSceneManager<mc>.Instance.isActive)
         {
             this.UpdateInput();
+            //当前角速度
             this.currentAngleSpeed = Mathf.Lerp(this.currentAngleSpeed, 0f, 5f * Time.deltaTime);
+            //当前角度
             this.currentAngle += this.currentAngleSpeed * Time.deltaTime;
-            int num = (int)(this.currentAngle / 10f);
-            this.currentAngleRotLocal = Mathf.Lerp(this.currentAngleRotLocal, (float)(num * 10), 20f * Time.deltaTime);
+            //
+            //int num = (int)(this.currentAngle / 10f);
+            //this.currentAngleRotLocal = Mathf.Lerp(this.currentAngleRotLocal, (float)(num * 10), 20f * Time.deltaTime);
             base.transform.localRotation = Quaternion.Euler(new Vector3(0f, this.currentAngle, 0f));
         }
     }
@@ -134,26 +142,33 @@ public class Base : BaseSceneManager<Base>
     //手势输入
     private void UpdateInput()
     {
-        Vector3 vector2 = new Vector3(Input.mousePosition.x, 0f, 0f) - new Vector3(this.startPos.x, 0f, 0f);
-        float num = Mathf.Clamp(vector2.magnitude, 0f, this.maxRotSpeed);
+        //手势移动的向量（只计算X轴）
+        Vector3 moveVector = new Vector3(Input.mousePosition.x, 0f, 0f) - new Vector3(this.startPosition.x, 0f, 0f);
+        //移动向量长度（最小0，最大maxRotateSpeed）
+        float moveX = Mathf.Clamp(moveVector.magnitude, 0f, this.maxRotateSpeed);
+        //屏幕宽度
         float screenWidth = ((float)Screen.width);
-        screenWidth = 720;
-        float num2 = num / ((float)Screen.width);
-        float item = (-Mathf.Sign(Input.mousePosition.x - this.startPos.x) * num2) * this.rotateSpeed;
+        Debug.Log("屏幕宽度 : " + screenWidth);
+        //X方向移动占屏幕总宽度的百分比
+        float moveXPercent = moveX / screenWidth;
+        //获取到移动( 移动的X位置)
+        float speed = (-Mathf.Sign(Input.mousePosition.x - this.startPosition.x) * moveXPercent) * this.rotateSpeed;
         if (BaseSceneManager<mc>.Instance.isGameStarted)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                //鼠标左键按下
                 this.speedHistory.Clear();
                 this.currentAngleSpeed = 0f;
-                this.startPos = Input.mousePosition;
+                this.startPosition = Input.mousePosition;
             }
             else if (Input.GetMouseButton(0))
             {
+                //鼠标左键按着
                 this.currentAngleSpeed = 0f;
-                if (num2 > this.minSwipeDistX)
+                if (moveXPercent > this.minSwipeDistX)
                 {
-                    this.speedHistory.Add(item);
+                    this.speedHistory.Add(speed);
                 }
                 else
                 {
@@ -163,18 +178,19 @@ public class Base : BaseSceneManager<Base>
                 {
                     this.speedHistory.RemoveAt(0);
                 }
-                this.currentAngle += item;
-                this.startPos = Input.mousePosition;
+                this.currentAngle += speed;
+                this.startPosition = Input.mousePosition;
             }
-            else if (Input.GetMouseButtonUp(0) && (num > this.minSwipeDistX))
+            else if (Input.GetMouseButtonUp(0) && (moveX > this.minSwipeDistX))
             {
-                float num4 = 0f;
+                //鼠标左键抬起
+                float speedX = 0f;
                 for (int i = 0; i < this.speedHistory.Count; i++)
                 {
-                    num4 += this.speedHistory[i];
+                    speedX += this.speedHistory[i];
                 }
-                this.currentAngleSpeed = 6f * num4;
-                this.startPos = Input.mousePosition;
+                this.currentAngleSpeed = 6f * speedX;
+                this.startPosition = Input.mousePosition;
             }
         }
     }
