@@ -256,7 +256,7 @@ public class mc : BaseSceneManager<mc>
         {
             //原
             //base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 60f, 0f);
-            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 25f, 0f);
+            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 35f, 0f);
             this.setUpvelocity = false;
         }
     }
