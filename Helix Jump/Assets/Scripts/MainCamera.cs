@@ -27,11 +27,12 @@ public class MainCamera : BaseSceneManager<MainCamera>
     {
         if (this.isFolloving)
         {
+            //镜头跟随
             base.transform.position = new Vector3(0f, Mathf.Min(this.mc.transform.position.y, base.transform.position.y - this.Yoffset) + this.Yoffset, -50f);
         }
     }
 
-    //上升效果
+    //上升
     private IEnumerator GoUpCoroutine()
     {
         float time = 1f;
