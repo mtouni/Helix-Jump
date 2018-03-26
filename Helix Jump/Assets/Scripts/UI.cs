@@ -6,7 +6,9 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+/**
+ * UI
+ **/
 public class UI : BaseSceneManager<UI>
 {
     public Animator blimAnimator;//溢出动画
@@ -14,6 +16,7 @@ public class UI : BaseSceneManager<UI>
     public Color colorEnd;//结束的颜色
     public Color colorStart;//开始的颜色
     public Image filledImage;
+    //菜单
     public GameObject fortuneSpinButtonRounded;
     public GameObject gcButton;//按钮：游戏中心
     public GameObject MM;//管理菜单

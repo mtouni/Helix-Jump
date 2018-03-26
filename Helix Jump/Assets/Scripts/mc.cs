@@ -37,7 +37,6 @@ public class mc : BaseSceneManager<mc>
     public bool isGameStarted;
     public Text levelFrom;//当前等级
     public Image LevelPassedPin;
-    public Text levelText;//文字：过关，等级提升
     public Text levelTo;//下一等级
     public GameObject levelUpButton;
     public Text levelUpText;
@@ -72,6 +71,7 @@ public class mc : BaseSceneManager<mc>
     private string[] versionNames = new string[] { "Base", "WorldBuilder", "ShorterLevels", "Animations" };//版本名称
     [Header("设置获胜界面")]
     public GameObject winMenu;//获胜界面
+    public Text levelText;//文字：过关，等级提升
 
     // Use this for initialization
     private void Start()
@@ -373,9 +373,11 @@ public class mc : BaseSceneManager<mc>
         }
     }
 
+    //重新开始
     public void Restart()
     {
-        //base.StartCoroutine(this.AddMoneyRestartCoroutine());
+        UnityEngine.Debug.Log("Restart");
+        base.StartCoroutine(this.AddMoneyRestartCoroutine());
     }
 
     //死亡后,恢复比赛
@@ -465,40 +467,36 @@ public class mc : BaseSceneManager<mc>
     //添加金币重启
     private IEnumerator AddMoneyRestartCoroutine()
     {
-        int scoreAdd;//添加的分数
-        scoreAdd = mc.score / 50;
+        int scoreAdd = mc.score / 50;//添加的分数
         if ((scoreAdd <= 0) || (this.gameId != GameType.GAME_WORLD))
         {
-          
+            //break;
+        }
+        //BaseSceneManager<UI>.Instance.reviveBlock.SetActive(false);
+        this.newRecord.gameObject.SetActive(false);
+        this.restartPercentage.gameObject.SetActive(false);
+        //this.AddMoneyRestartText.text = "+" + scoreAdd.ToString();
+        //this.AddMoneyRestart.SetActive(true);
+        //this.AddMoneyRestartSound.Play();
+        yield return new WaitForSeconds(0.5f);
+
+        this.AddMoney(scoreAdd);
+        yield return new WaitForSeconds(0.5f);
+
+        if (PlayerPrefs.HasKey("sessionsCount"))
+        {
+            this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
+            this.sessionsCount++;
+            PlayerPrefs.SetInt("sessionsCount", this.sessionsCount);
         }
         else
         {
-            BaseSceneManager<UI>.Instance.reviveBlock.SetActive(false);
-            this.newRecord.gameObject.SetActive(false);
-            this.restartPercentage.gameObject.SetActive(false);
-            this.AddMoneyRestartText.text = "+" + scoreAdd.ToString();
-            this.AddMoneyRestart.SetActive(true);
-            this.AddMoneyRestartSound.Play();
-            yield return new WaitForSeconds(0.5f);
-
-            this.AddMoney(scoreAdd);
-            yield return new WaitForSeconds(0.5f);
-
-            if (PlayerPrefs.HasKey("sessionsCount"))
-            {
-                this.sessionsCount = PlayerPrefs.GetInt("sessionsCount");
-                this.sessionsCount++;
-                PlayerPrefs.SetInt("sessionsCount", this.sessionsCount);
-            }
-            else
-            {
-                this.sessionsCount++;
-                PlayerPrefs.SetInt("sessionsCount", this.sessionsCount);
-            }
-            mc.score = 0;
-            BaseGameManager<AdsManager>.GetInstance().ShowInterstitial();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            this.sessionsCount++;
+            PlayerPrefs.SetInt("sessionsCount", this.sessionsCount);
         }
+        mc.score = 0;
+        //BaseGameManager<AdsManager>.GetInstance().ShowInterstitial();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //摧毁当前平台
@@ -537,10 +535,7 @@ public class mc : BaseSceneManager<mc>
             for (int m = 0; m < objectList.Count; m++)
             {
                 Transform objectItem = objectList[m];
-                //原
                 Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 100f);
-                //测试
-                //Vector3 vector2 = (Vector3)((objectItem.forward * Time.deltaTime) * 20f);
                 objectItem.position += new Vector3(vector2.x, speed * Time.deltaTime, vector2.z);
                 objectItem.Rotate((float)(45f * Time.deltaTime), 90f * Time.deltaTime, (float)(20f * Time.deltaTime));
                 UnityEngine.Debug.Log("time ： " + time + "; objectItem : " + objectItem + "; objectItem.position : " + objectItem.position);
