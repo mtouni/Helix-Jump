@@ -17,7 +17,7 @@ public class UI : BaseSceneManager<UI>
     public AudioSource prizeSound;//音效：奖励
     [Header("粒子效果")]
     public ParticleSystem psGrow;
-
+    ParticleSystem.MainModule psGrowMM;
     //
     public GameObject fortuneSpinButtonRounded;
     //顶部等级进度
@@ -151,6 +151,7 @@ public class UI : BaseSceneManager<UI>
 
     private void Start()
     {
+        psGrowMM = this.psGrow.main;
         AudioListener.volume = (PlayerPrefs.HasKey("soundsOn") && (PlayerPrefs.GetInt("soundsOn") != 1)) ? 0f : 1f;
     }
 
@@ -166,8 +167,8 @@ public class UI : BaseSceneManager<UI>
         BaseSceneManager<mc>.Instance.progression.fillAmount = t;
         BaseSceneManager<mc>.Instance.progression.color = (Color.Lerp(this.colorStart, this.colorEnd, t));
         this.pointStart.GetComponent<Image>().color = (Color.Lerp(this.colorStart, this.colorEnd, t));
-        //this.psGrow.main.startColor = Color.Lerp(this.colorStart, this.colorEnd, t);
-        //this.psGrow.transform.position = Vector3.Lerp(Camera.main.ScreenToWorldPoint(this.pointStart.position + new Vector3(0f, 0f, 1f)), Camera.main.ScreenToWorldPoint(this.pointEnd.position + new Vector3(0f, 0f, 1f)), t + 0.01f);
+        this.psGrowMM.startColor = Color.Lerp(this.colorStart, this.colorEnd, t);
+        this.psGrow.transform.position = Vector3.Lerp(Camera.main.ScreenToWorldPoint(this.pointStart.position + new Vector3(0f, 0f, 1f)), Camera.main.ScreenToWorldPoint(this.pointEnd.position + new Vector3(0f, 0f, 1f)), t + 0.01f);
         if (t > 0.7f)
         {
         //    this.blimAnimator.enabled = true;

@@ -74,6 +74,7 @@ public class AdsManager : BaseGameManager<AdsManager>
     //展示激励广告
     public void ShowInterstitial()
     {
+        
         //VoodooSauce.ShowInterstitial(new Action(this.MyInterstitialCompleteCallback));
     }
 
@@ -84,7 +85,7 @@ public class AdsManager : BaseGameManager<AdsManager>
     //}
 
     //展示Banner广告
-    private void Start()
+    void Start()
     {
         //VoodooSauce.ShowBanner(new Action<float>(this.MyBannerDisplayedCallback));
     }

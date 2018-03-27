@@ -20,9 +20,13 @@ public class mc : BaseSceneManager<mc>
     public int currentPlayformId;//当前平台ID
     public Transform currentPlatform;//当前平台坐标
 
+    //
+    private static int score = 0;//分数
+    public int scoreInRow = 1;//当前这行的分数
+    public int scoreNow = 3;//当前的分数
+
     //添加金币重新启动
     public GameObject AddMoneyRestart;
-
     public Text AddMoneyRestartText;
     //
     public Animator anim;
@@ -52,8 +56,8 @@ public class mc : BaseSceneManager<mc>
 
     [Header("粒子效果")]
     public ParticleSystem psExtraSplash;//粒子效果：球快熟下落撞破台面撒出的大粒子
-    public ParticleSystem psBurn;//粒子效果：燃烧
-    public ParticleSystem psBurn1;//粒子效果：燃烧1
+    public ParticleSystem psBurn;//粒子效果：拖尾燃烧
+    public ParticleSystem psBurn1;//粒子效果：拖尾燃烧1
     public ParticleSystem psSplash; ///粒子效果：球和台面碰撞撒出的粒子
 
     [Tooltip("球落地痕迹")]
@@ -65,6 +69,11 @@ public class mc : BaseSceneManager<mc>
     [Tooltip("动画：加分")]
     public GameObject plusPrefab;//动画：加分动画
 
+    [Header("基础界面")]
+    public Text newRecord;//新记录
+    public Text scoreNowText;
+    public Text scoreText;//当前分数
+
     [Header("等级进度条")]
     public Text levelFrom;//当前等级
     public Text levelTo;//下一等级
@@ -73,20 +82,14 @@ public class mc : BaseSceneManager<mc>
     public Text levelUpText;
     public Image progression;//进展图片
 
-    public Text newRecord;//新记录
     public GameObject psPickup;
 
+    [Header("失败界面")]
     public GameObject restartMenu;/// 重新开始菜单（完成）
     public Text restartPercentage;//重新开始：完成百分比
-    private bool reviveShown;//是否恢复显示，弹广告
-    private static int score = 0;//分数
-    public int scoreInRow = 1;//当前这行的分数
-    public int scoreNow = 3;//当前的分数
-    //
-    public Text scoreNowText;
-    public Text scoreText;//当前分数
+    private bool reviveShown;//是否恢复显示，查看广告可以复活（只有一次机会）
 
-    [Header("设置获胜界面")]
+    [Header("获胜界面")]
     [Tooltip("动画：完成比赛")]
     public GameObject finishPrefab;//Prefab:完成比赛
     public GameObject winMenu;//获胜界面
@@ -154,6 +157,7 @@ public class mc : BaseSceneManager<mc>
         }
         if (this.scoreInRow > ((Base.currentLevel + 1) * 2))
         {
+            //连续不碰到，有火焰拖尾效果
             //    this.psBurn.gameObject.SetActive(true);
             //    this.psBurn1.gameObject.SetActive(true);
         }
