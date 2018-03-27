@@ -13,4 +13,4 @@ AppStore下载地址：https://itunes.apple.com/app/id1345968745
 Unity 2017.3.1f
 
 ## 进度
-基本完成，在进行关卡设计
+功能完成开发，优化代码
