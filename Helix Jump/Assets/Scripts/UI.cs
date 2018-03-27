@@ -16,22 +16,26 @@ public class UI : BaseSceneManager<UI>
     public Color colorEnd;//结束的颜色
     public Color colorStart;//开始的颜色
     public Image filledImage;
-    //菜单
+    //
     public GameObject fortuneSpinButtonRounded;
-    public GameObject gcButton;//按钮：游戏中心
-    public GameObject MM;//管理菜单
+    //主菜单
+    public GameObject mainMenu;//主菜单
     public GameObject noadsButton;//按钮：去广告
+    public GameObject gcButton;//按钮：游戏中心
+    public GameObject restoreButton;//按钮：修复
+    public GameObject shopButton;//按钮：商店
+    public GameObject soundButton;//按钮：声音打开关闭
+    public Animator skinsComingSoon;//按钮：Skin
+
+    public GameObject reviveBlock;//恢复
     public Transform pointEnd;//结束的点
     public Transform pointStart;//开始的点
     public GameObject prizeBGRounded;
     public Text prizeMoneyTextRounded;
     public AudioSource prizeSound;
     public ParticleSystem psGrow;
-    public GameObject restoreButton;//按钮：恢复
-    public GameObject reviveBlock;//恢复
-    public GameObject shopButton;//按钮：商店
-    public Animator skinsComingSoon;//按钮：Skin
-    public GameObject soundButton;//按钮：声音
+
+    //转圈
     public GameObject SpinWheel;
     public GameObject spinWheelRounded;//圆形的SpinWheel
 
@@ -41,11 +45,11 @@ public class UI : BaseSceneManager<UI>
         BaseGameManager<AdsManager>.GetInstance().BuyNoAds();
     }
 
-    //播放
+    //开始游戏
     public void Play()
     {
         BaseSceneManager<mc>.Instance.isGameStarted = true;
-        this.MM.SetActive(false);
+        this.mainMenu.SetActive(false);
     }
 
     public void RestorePurchases()

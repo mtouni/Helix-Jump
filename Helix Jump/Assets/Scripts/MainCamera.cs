@@ -17,8 +17,7 @@ public class MainCamera : BaseSceneManager<MainCamera>
         this.isFolloving = false;
         base.StartCoroutine(this.GoUpCoroutine());//协同进行
     }
-
-    // Use this for initialization
+    
     void Start () {
 		
 	}

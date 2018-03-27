@@ -9,9 +9,22 @@ using UnityEngine.UI;
 
 public class mc : BaseSceneManager<mc>
 {
+    private string[] versionNames = new string[] { "Base", "WorldBuilder", "ShorterLevels", "Animations" };//版本名称
+
+    [Header("基础信息")]
+    public GameType gameId;//游戏ID
+    public int currentObjectLevel;//当前游戏等级
+    public bool isActive = true;//是否在活动
+    public bool isGameStarted;//是否游戏开始
+    private int sessionsCount;//会话次数（用户弹出评分框）
+    public int currentPlayformId;//当前平台ID
+    public Transform currentPlatform;//当前平台坐标
+
+    //添加金币重新启动
     public GameObject AddMoneyRestart;
-    public AudioSource AddMoneyRestartSound;
+
     public Text AddMoneyRestartText;
+    //
     public Animator anim;
     public GameObject AnimatedButton;//
     public Text best;//Text：最好成绩
@@ -23,37 +36,47 @@ public class mc : BaseSceneManager<mc>
     public List<int> currencyList;//货币列表
     public Text currencyText;//文本：当前文本
     public GameObject currencyUI;//UI：当前金币
-    //
-    public int currentObjectLevel;//当前等级
-    public Transform currentPlatform;//当前平台坐标
-    public int currentPlayformId;//当前平台ID
-    public AudioSource death;//音效：死亡
+
+    [Header("配置")]
+    public List<GameObject> objects;//游戏块
+
+    [Header("音效")]
+    public AudioSource AddMoneyRestartSound;
+    public AudioSource deathAudio;//音效：死亡
+    public AudioSource passAudio;//音效：通过平台
+    public AudioSource splashAudio;//音效：球落地水花溅开
+
+    [Header("粒子效果")]
+    public ParticleSystem psExtraSplash;//粒子效果：球快熟下落撞破台面撒出的大粒子
+    public ParticleSystem psBurn;//粒子效果：燃烧
+    public ParticleSystem psBurn1;//粒子效果：燃烧1
+    public ParticleSystem psSplash; ///粒子效果：球和台面碰撞撒出的粒子
+
     [Tooltip("球落地痕迹")]
     public List<GameObject> decal;//球落地痕迹
-    public ParticleSystem extraSplash;
-    public GameObject finishPrefab;//完成比赛的Prefab
-    public GameType gameId;
-    public bool isActive = true;
-    public bool isGameStarted;
+
+    [Header("Prefab")]
+    [Tooltip("动画：完成比赛")]
+    public GameObject finishPrefab;//Prefab:完成比赛
+    [Tooltip("动画：Awesome")]
+    public GameObject plusAwesomePrefab;//动画：Awesome动画
+    [Tooltip("动画：加分")]
+    public GameObject plusPrefab;//动画：加分动画
+
+    [Header("等级进度条")]
     public Text levelFrom;//当前等级
-    public Image LevelPassedPin;
     public Text levelTo;//下一等级
+    public Image LevelPassedPin;
     public GameObject levelUpButton;
     public Text levelUpText;
+    public Image progression;//进展图片
+
     public PhysicMaterial mat;//物理反弹力
     public Material mcMat;//材质
     public Text newRecord;//新记录
-    public List<GameObject> objects;//游戏块
-    public AudioSource pass;//音乐播放：通过
-    [Tooltip("动画：Awesome动画")]
-    public GameObject plusAwesomePrefab;//动画：Awesome动画
-    [Tooltip("动画：加分动画")]
-    public GameObject plusPrefab;//动画：加分动画
-    public Image progression;//进展图片
-    public ParticleSystem psBurn;//粒子效果：燃烧
-    public ParticleSystem psBurn1;//粒子效果：燃烧1
+
     public GameObject psPickup;
-    public ParticleSystem psSplash; ///粒子效果（球和台面碰撞撒出的粒子）
+
     public GameObject restartMenu;/// 重新开始菜单（完成）
     public Text restartPercentage;//重新开始：完成百分比
     private bool reviveShown;//是否恢复显示，弹广告
@@ -63,22 +86,15 @@ public class mc : BaseSceneManager<mc>
     //
     public Text scoreNowText;
     public Text scoreText;//当前分数
-    private int sessionsCount;//会话次数（用户弹出评分框）
     private bool setUpvelocity;//是否需要弹起来
-    public AudioSource splash;//音乐播放：球落地水花溅开
     public float startDrag;//开始时候的阻力：
     public float finalDrag;//结束时候的阻力：
-    private string[] versionNames = new string[] { "Base", "WorldBuilder", "ShorterLevels", "Animations" };//版本名称
     [Header("设置获胜界面")]
     public GameObject winMenu;//获胜界面
     public Text levelText;//文字：过关，等级提升
 
-    // Use this for initialization
     private void Start()
     {
-        //自己加的
-        isGameStarted = true;
-        //原本的
         this.currentObjectLevel = PlayerPrefs.GetInt("currentObjectLevel");
         if (this.gameId == GameType.GAME_WORLD)
         {
@@ -112,12 +128,11 @@ public class mc : BaseSceneManager<mc>
 
         if (base.transform.position.y < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position.y)
         {
-            //定位
-            //    this.pass.pitch = 1f + ((this.scoreInRow * 0.2f) / ((float)(Base.currentLevel + 1)));
-            //    this.pass.Play();
+            this.passAudio.pitch = 1f + ((this.scoreInRow * 0.2f) / ((float)(Base.currentLevel + 1)));
+            this.passAudio.Play();
             //摧毁面板
             base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
-            BaseSceneManager<UI>.Instance.Play();
+            BaseSceneManager<UI>.Instance.Play();//游戏开始
             //    this.bestUI.SetActive(false);
             if ((this.currentPlatform == null) || (this.currentPlatform.transform.parent != BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform))
             {
@@ -190,7 +205,7 @@ public class mc : BaseSceneManager<mc>
         this.isActive = false;
         base.GetComponent<Rigidbody>().isKinematic = true;//让球不再运动
         this.restartMenu.SetActive(true);
-        //this.death.Play();
+        this.deathAudio.Play();
         base.transform.localScale = new Vector3(2.3f, 1.7f, 2.3f);
         this.restartPercentage.text = ((int)((BaseSceneManager<mc>.Instance.currentPlayformId * 100f) / ((float)(BaseSceneManager<Base>.Instance.platforms.Count - 1)))).ToString("D") + "% Completed!";
         if (PlayerPrefs.HasKey("sessionsCount"))
@@ -222,7 +237,7 @@ public class mc : BaseSceneManager<mc>
     //包里摧毁
     public void ForceDestroy(Transform platform)
     {
-        //this.extraSplash.Play();
+        this.psExtraSplash.Play();
         base.StartCoroutine(this.plusCoroutine(this.scoreInRow));
         score += this.scoreInRow;
         //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f))).GetComponent<ParticleSystem>().Play();
@@ -232,7 +247,7 @@ public class mc : BaseSceneManager<mc>
         }
         base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
         //TapticManager.Impact(ImpactFeedback.Midium);
-        this.splash.Play();
+        this.splashAudio.Play();
         this.setUpvelocity = true;
         //this.anim.Play("Base Layer.Splash", 0, 0f);//飞溅开来
         this.currentPlayformId++;
@@ -330,7 +345,7 @@ public class mc : BaseSceneManager<mc>
                 decalObj.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, (float)UnityEngine.Random.Range(-180, 180)));
                 //震动
                 //TapticManager.Impact(ImpactFeedback.Midium);
-                this.splash.Play();
+                this.splashAudio.Play();
                 this.setUpvelocity = true;
                 //this.anim.Play("Base Layer.Splash", 0, 0f);
             }
@@ -353,7 +368,7 @@ public class mc : BaseSceneManager<mc>
             }
             else
             {
-                this.splash.Play();
+                this.splashAudio.Play();
             }
         }
         this.psSplash.Play();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AdsManager : BaseGameManager<AdsManager>
 {
+    //插屏广告最后显示
     private float interstitialLastShown = float.NegativeInfinity;
     private float interstitialNotReadyCounter = float.PositiveInfinity;
     private bool interstitialReady;
