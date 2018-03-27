@@ -12,13 +12,20 @@ using UnityEngine.UI;
 public class UI : BaseSceneManager<UI>
 {
     public Animator blimAnimator;//溢出动画
-    public AudioSource click;//点击声音
-    public Color colorEnd;//结束的颜色
-    public Color colorStart;//开始的颜色
-    public Image filledImage;
+    [Header("音效")]
+    public AudioSource clickAudio;//音效：点击
+    public AudioSource prizeSound;//音效：奖励
+    [Header("粒子效果")]
+    public ParticleSystem psGrow;
+
     //
     public GameObject fortuneSpinButtonRounded;
-    //主菜单
+    //顶部等级进度
+    public Color colorEnd;//结束的颜色
+    public Color colorStart;//开始的颜色
+    public Transform pointEnd;//坐标：结束的点
+    public Transform pointStart;//坐标：开始的点
+    [Header("主菜单")]
     public GameObject mainMenu;//主菜单
     public GameObject noadsButton;//按钮：去广告
     public GameObject gcButton;//按钮：游戏中心
@@ -26,22 +33,20 @@ public class UI : BaseSceneManager<UI>
     public GameObject shopButton;//按钮：商店
     public GameObject soundButton;//按钮：声音打开关闭
     public Animator skinsComingSoon;//按钮：Skin
+    [Header("失败后的菜单")]
+    public GameObject reviveBlock;//恢复游戏界面
+    public Image filledImage;//圆形进度条
 
-    public GameObject reviveBlock;//恢复
-    public Transform pointEnd;//结束的点
-    public Transform pointStart;//开始的点
-    public GameObject prizeBGRounded;
-    public Text prizeMoneyTextRounded;
-    public AudioSource prizeSound;
-    public ParticleSystem psGrow;
-
+    public GameObject prizeBGRounded;//奖励圆形的背景
+    public Text prizeMoneyTextRounded;//奖励金币
+    
     //转圈
     public GameObject SpinWheel;
     public GameObject spinWheelRounded;//圆形的SpinWheel
 
     public void BuyNoAds()
     {
-        this.click.Play();
+        this.clickAudio.Play();
         BaseGameManager<AdsManager>.GetInstance().BuyNoAds();
     }
 
@@ -55,22 +60,26 @@ public class UI : BaseSceneManager<UI>
     public void RestorePurchases()
     {
         //BaseGameManager<AdsManager>.GetInstance().RestorePurchases();
-        this.click.Play();
+        this.clickAudio.Play();
     }
 
+    //恢复比赛
     public void Revive()
     {
-        this.click.Play();
+        this.clickAudio.Play();
         this.reviveBlock.SetActive(false);
+        //视频激励广告成功弹出，执行this.ReviveSuccessful
         //BaseGameManager<AdsManager>.GetInstance().ShowVideo(new Action<bool>(this.ReviveSuccessful));
+        this.ReviveSuccessful(true);
     }
 
+    //恢复比赛成功
     private void ReviveSuccessful(bool success)
     {
         if (success)
         {
             this.reviveBlock.SetActive(false);
-            //BaseSceneManager<mc>.Instance.Revive();
+            BaseSceneManager<mc>.Instance.Revive();
         }
     }
 
@@ -93,7 +102,7 @@ public class UI : BaseSceneManager<UI>
             this.shopButton.SetActive(false);
             this.gcButton.SetActive(true);
         }
-        //this.click.Play();
+        this.clickAudio.Play();
     }
 
     //点击：商店
@@ -105,20 +114,23 @@ public class UI : BaseSceneManager<UI>
     public void ShowGC()
     {
         Social.ShowLeaderboardUI();
-        this.click.Play();
+        this.clickAudio.Play();
     }
 
     private static void ShowRateUs()
     {
     }
 
-    //显示恢复，弹广告
+    //显示恢复界面
     public void ShowRevive()
     {
-        if (BaseGameManager<AdsManager>.GetInstance().IsVideoReady())
-        {
+        UnityEngine.Debug.Log("ShowRevive");
+        //if (BaseGameManager<AdsManager>.GetInstance().IsVideoReady())
+        //{
+        //    //弹出广告，才会恢复比赛
         //    base.StartCoroutine(this.reviveCoroutine());
-        }
+        //}
+        base.StartCoroutine(this.reviveCoroutine());
     }
 
     //点击按钮：声音
@@ -128,13 +140,13 @@ public class UI : BaseSceneManager<UI>
         flag = !flag;
         PlayerPrefs.SetInt("soundsOn", !flag ? 0 : 1);
         AudioListener.volume = !flag ? 0f : 1f;
-        this.click.Play();
+        this.clickAudio.Play();
     }
 
     //旋转
     public void Spin()
     {
-        //base.StartCoroutine(this.SpinCoroutine());
+        base.StartCoroutine(this.SpinCoroutine());
     }
 
     private void Start()
@@ -167,4 +179,23 @@ public class UI : BaseSceneManager<UI>
         this.SpinWheel.SetActive(true);
     }
 
+    //旋转
+    private IEnumerator SpinCoroutine()
+    {
+        yield return null;
+    }
+
+    //恢复比赛
+    private IEnumerator reviveCoroutine()
+    {
+        float time = 4f;
+        this.reviveBlock.SetActive(true);
+        while (time > 0f)
+        {
+            time -= Time.deltaTime;
+            this.filledImage.fillAmount = time / 4f;
+            yield return null;
+        }
+        this.reviveBlock.SetActive(false);
+    }
 }

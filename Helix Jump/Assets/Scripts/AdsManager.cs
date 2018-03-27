@@ -35,7 +35,7 @@ public class AdsManager : BaseGameManager<AdsManager>
     public bool IsVideoReady()
     {
         //return VoodooSauce.IsRewardedVideoAvailable();
-        return false;
+        return true;
     }
 
     //Banner广告展示回调

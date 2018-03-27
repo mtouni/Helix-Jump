@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class mc : BaseSceneManager<mc>
 {
     private string[] versionNames = new string[] { "Base", "WorldBuilder", "ShorterLevels", "Animations" };//版本名称
-
+    private bool setUpvelocity;//是否需要弹起来
     [Header("基础信息")]
     public GameType gameId;//游戏ID
     public int currentObjectLevel;//当前游戏等级
@@ -39,6 +39,10 @@ public class mc : BaseSceneManager<mc>
 
     [Header("配置")]
     public List<GameObject> objects;//游戏块
+    public float startDrag;//开始时候的阻力：
+    public float finalDrag;//结束时候的阻力：
+    public PhysicMaterial mat;//物理反弹力
+    public Material mcMat;//材质
 
     [Header("音效")]
     public AudioSource AddMoneyRestartSound;
@@ -56,8 +60,6 @@ public class mc : BaseSceneManager<mc>
     public List<GameObject> decal;//球落地痕迹
 
     [Header("Prefab")]
-    [Tooltip("动画：完成比赛")]
-    public GameObject finishPrefab;//Prefab:完成比赛
     [Tooltip("动画：Awesome")]
     public GameObject plusAwesomePrefab;//动画：Awesome动画
     [Tooltip("动画：加分")]
@@ -71,10 +73,7 @@ public class mc : BaseSceneManager<mc>
     public Text levelUpText;
     public Image progression;//进展图片
 
-    public PhysicMaterial mat;//物理反弹力
-    public Material mcMat;//材质
     public Text newRecord;//新记录
-
     public GameObject psPickup;
 
     public GameObject restartMenu;/// 重新开始菜单（完成）
@@ -86,10 +85,10 @@ public class mc : BaseSceneManager<mc>
     //
     public Text scoreNowText;
     public Text scoreText;//当前分数
-    private bool setUpvelocity;//是否需要弹起来
-    public float startDrag;//开始时候的阻力：
-    public float finalDrag;//结束时候的阻力：
+
     [Header("设置获胜界面")]
+    [Tooltip("动画：完成比赛")]
+    public GameObject finishPrefab;//Prefab:完成比赛
     public GameObject winMenu;//获胜界面
     public Text levelText;//文字：过关，等级提升
 
@@ -219,9 +218,9 @@ public class mc : BaseSceneManager<mc>
         //this.bestUI.SetActive(false);
         if (!this.reviveShown)
         {
-            //恢复显示，弹广告
+            //显示恢复比赛模块
             this.reviveShown = true;
-            //BaseSceneManager<UI>.Instance.ShowRevive();
+            BaseSceneManager<UI>.Instance.ShowRevive();
         }
         this.ReportScore((float)score);
         ////VoodooSauce.OnGameFinished((float)score);
@@ -243,7 +242,8 @@ public class mc : BaseSceneManager<mc>
         //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f))).GetComponent<ParticleSystem>().Play();
         for (int i = 0; i < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.childCount; i++)
         {
-            //    BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.GetChild(i).GetComponent<MeshRenderer>().material = this.mcMat;
+            //
+            BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.GetChild(i).GetComponent<MeshRenderer>().material = this.mcMat;
         }
         base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));
         //TapticManager.Impact(ImpactFeedback.Midium);
@@ -269,9 +269,8 @@ public class mc : BaseSceneManager<mc>
     {
         if (this.setUpvelocity)
         {
-            //原
             //base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 60f, 0f);
-            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 35f, 0f);
+            base.GetComponent<Rigidbody>().velocity = new Vector3(0f, 50f, 0f);
             this.setUpvelocity = false;
         }
     }
@@ -411,6 +410,7 @@ public class mc : BaseSceneManager<mc>
         transform2.position += new Vector3(0f, 20f, 0f);
     }
 
+    //社交授权
     public void SocialAuthenticate()
     {
         if (!Application.isEditor && !Social.localUser.authenticated)
@@ -419,6 +419,7 @@ public class mc : BaseSceneManager<mc>
         }
     }
 
+    //开始动画模式
     public void StartAnimations()
     {
         PlayerPrefs.DeleteAll();
@@ -426,6 +427,7 @@ public class mc : BaseSceneManager<mc>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //开始基础模式
     public void StartBase()
     {
         PlayerPrefs.DeleteAll();
@@ -433,6 +435,7 @@ public class mc : BaseSceneManager<mc>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //开始短模式
     public void StartShort()
     {
         PlayerPrefs.DeleteAll();
@@ -440,6 +443,7 @@ public class mc : BaseSceneManager<mc>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //开始世界模式
     public void StartWorld()
     {
         PlayerPrefs.DeleteAll();
@@ -467,6 +471,7 @@ public class mc : BaseSceneManager<mc>
         this.levelUpText.text = this.currencyList[this.currentObjectLevel].ToString();
     }
 
+    //获胜
     public void Win()
     {
         this.isActive = false;
@@ -575,15 +580,19 @@ public class mc : BaseSceneManager<mc>
         //等级提升
         Base.currentLevel++;
         PlayerPrefs.SetInt("currentLevel", Base.currentLevel);
-
+        //显示获胜界面
         if (this.gameId != GameType.GAME_ANIM)
         {
-            //this.winMenu.SetActive(true);
+            this.winMenu.SetActive(true);
             yield return new WaitForSeconds(1.5f);
         }
-        yield return null;
-        i++;
-        yield return null;
+        while (i < 10)
+        {
+            i++;
+            UnityEngine.Object.Instantiate<GameObject>(this.finishPrefab, new Vector3(0f, ypos + (5 * i), 0f), Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
         if (this.gameId != GameType.GAME_WORLD)
         {
             //BaseGameManager<AdsManager>.GetInstance().ShowInterstitial();
@@ -593,12 +602,6 @@ public class mc : BaseSceneManager<mc>
         {
             BaseSceneManager<UI>.Instance.WheelofFortune();//幸运轮
         }
-        if (i < 10)
-        {
-            //UnityEngine.Object.Instantiate<GameObject>(this.finishPrefab, new Vector3(0f, ypos + (5 * i), 0f), Quaternion.identity);
-            //yield return new WaitForSeconds(0.1f);
-        }
-        
     }
 
     //加分数的特效
@@ -614,13 +617,12 @@ public class mc : BaseSceneManager<mc>
             plusAwesomeObj = UnityEngine.Object.Instantiate<GameObject>(this.plusAwesomePrefab, new Vector3(300f, 0f, 0f), Quaternion.identity, this.canvas.transform);
             plusAwesomeObj.GetComponent<Animator>().Play("Base Layer.plus", 0, 0f);
         }
-        yield return new WaitForSeconds(0.95f);//下一帧调用, 什么都不做
+        yield return new WaitForSeconds(0.95f);
         //回收对象
         UnityEngine.Object.Destroy(plusObj);
         if (plusAwesomeObj != null)
         {
             UnityEngine.Object.Destroy(plusAwesomeObj);
         }
-        yield return null; //下一帧调用, 什么都不做
     }
 }
