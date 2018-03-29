@@ -2,22 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * 材质管理
+ */
 public class colorSchemen : MonoBehaviour
 {
+    [Header("背景材质")]
+    [Tooltip("背景")]
     public List<Material> background;
+    [Tooltip("背景2")]
     public List<Material> background2;
+    [Tooltip("背景（参考）")]
     public Material backgroundRef;
+    [Header("破裂材质")]
+    [Tooltip("破裂的材质")]
     public List<Material> badass;
+    [Tooltip("破裂的材质（参考）")]
     public Material badassRef;
+    [Header("圆柱材质")]
+    [Tooltip("圆柱材质")]
     public List<Material> baseCylinder;
+    [Tooltip("圆柱材质（参考）")]
     public Material baseCylinderRef;
+    [Header("圆柱材质")]
+    [Tooltip("圆柱材质")]
     public List<Material> mcC;
+    [Tooltip("球类材质（参考）")]
     public Material mcRef;
+    [Header("平台材质")]
+    [Tooltip("平台材质")]
     public List<Material> platform;
+    [Tooltip("平台材质（参考）")]
     public Material platformRef;
+    [Tooltip("精灵渲染器")]
     public SpriteRenderer spot;
+    [Tooltip("拖尾材质")]
     public List<Material> trail;
+    [Tooltip("拖尾材质（球形）")]
     public Material trailGlobal;
+    [Tooltip("拖尾材质（参考）")]
     public Material trailRef;
 
     private void Start()

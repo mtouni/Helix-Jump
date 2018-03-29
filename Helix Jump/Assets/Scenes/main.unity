@@ -8377,6 +8377,68 @@ Transform:
   m_Father: {fileID: 966291306}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &889340875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 889340876}
+  - component: {fileID: 889340877}
+  m_Layer: 0
+  m_Name: ColorSchemen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &889340876
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 889340875}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1585163586}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &889340877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 889340875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506e71ecd0432e84ea2d99d795180260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  background2:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  backgroundRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  badass:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  badassRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  baseCylinder:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  baseCylinderRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  mcC:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  mcRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  platform:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  platformRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  spot: {fileID: 0}
+  trail:
+  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  trailGlobal: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  trailRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
 --- !u!1 &903921689
 GameObject:
   m_ObjectHideFlags: 0
@@ -15405,6 +15467,7 @@ Transform:
   m_Children:
   - {fileID: 743362882}
   - {fileID: 518390928}
+  - {fileID: 889340876}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
