@@ -2246,7 +2246,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: 63cbf79bc1364f44f942d36b6e96943d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2541,7 +2541,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 406858300
+  randomSeed: 2024088529
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8417,28 +8417,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506e71ecd0432e84ea2d99d795180260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundRef: {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
+  badassRef: {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
+  baseCylinderRef: {fileID: 2100000, guid: 63cbf79bc1364f44f942d36b6e96943d, type: 2}
+  mcRef: {fileID: 2100000, guid: b8080d59f6e28334393f9958758931ad, type: 2}
+  platformRef: {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
+  trailGlobal: {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
+  trailRef: {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
   background:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
   background2:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  backgroundRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
   badass:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  badassRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
   baseCylinder:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  baseCylinderRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: b8080d59f6e28334393f9958758931ad, type: 2}
   mcC:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  mcRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: b8080d59f6e28334393f9958758931ad, type: 2}
   platform:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  platformRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
   spot: {fileID: 0}
   trail:
-  - {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  trailGlobal: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
-  trailRef: {fileID: 2100000, guid: 769f4dd65021a844e8ade7d60110fc68, type: 2}
+  - {fileID: 2100000, guid: 844e36b34a607394f8dfcd273c4e3a50, type: 2}
 --- !u!1 &903921689
 GameObject:
   m_ObjectHideFlags: 0
@@ -16560,7 +16560,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3863088b76b08304fb25f8cd53f682c5, type: 2}
+  - {fileID: 2100000, guid: 63cbf79bc1364f44f942d36b6e96943d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
