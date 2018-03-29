@@ -46,7 +46,7 @@ public class mc : BaseSceneManager<mc>
     public float startDrag;//开始时候的阻力：
     public float finalDrag;//结束时候的阻力：
     public PhysicMaterial mat;//物理反弹力
-    public Material mcMat;//材质
+    public Material mcMat;//被快速击破时候平台材质
 
     [Header("音效")]
     public AudioSource AddMoneyRestartSound;
@@ -246,7 +246,7 @@ public class mc : BaseSceneManager<mc>
         //UnityEngine.Object.Instantiate<GameObject>(this.psPickup, BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f))).GetComponent<ParticleSystem>().Play();
         for (int i = 0; i < BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.childCount; i++)
         {
-            //
+            //快熟击破，台面变成统一被击破的眼色
             BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId].transform.GetChild(i).GetComponent<MeshRenderer>().material = this.mcMat;
         }
         base.StartCoroutine(this.destroyLayerCoroutine(BaseSceneManager<Base>.Instance.platforms[this.currentPlayformId]));

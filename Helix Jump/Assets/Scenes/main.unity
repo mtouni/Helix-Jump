@@ -2341,6 +2341,8 @@ MonoBehaviour:
   isGameStarted: 1
   currentPlayformId: 0
   currentPlatform: {fileID: 0}
+  scoreInRow: 1
+  scoreNow: 3
   AddMoneyRestart: {fileID: 0}
   AddMoneyRestartText: {fileID: 0}
   anim: {fileID: 0}
@@ -2356,7 +2358,7 @@ MonoBehaviour:
   startDrag: 0
   finalDrag: 1
   mat: {fileID: 13400000, guid: ef61f1d804393e64c9f18def55fc3ea2, type: 2}
-  mcMat: {fileID: 2100000, guid: 69f5d4313b1d38c4481902319cfad20c, type: 2}
+  mcMat: {fileID: 2100000, guid: b9b3e7b03c407ba4698433594eede8f2, type: 2}
   AddMoneyRestartSound: {fileID: 0}
   deathAudio: {fileID: 16584567}
   passAudio: {fileID: 2073523476}
@@ -2371,20 +2373,18 @@ MonoBehaviour:
   plusAwesomePrefab: {fileID: 1614695206409568, guid: 0a86183286fb83b4eb491e6352d1d5e9,
     type: 2}
   plusPrefab: {fileID: 1929166425109604, guid: 4e7374b4ab591e04c9531b8bb239ffc3, type: 2}
+  newRecord: {fileID: 2072365874}
+  scoreNowText: {fileID: 0}
+  scoreText: {fileID: 851961106}
   levelFrom: {fileID: 1904646286}
   levelTo: {fileID: 340962736}
   LevelPassedPin: {fileID: 0}
   levelUpButton: {fileID: 0}
   levelUpText: {fileID: 0}
   progression: {fileID: 1282354879}
-  newRecord: {fileID: 2072365874}
   psPickup: {fileID: 0}
   restartMenu: {fileID: 983449565}
   restartPercentage: {fileID: 1179746524}
-  scoreInRow: 1
-  scoreNow: 3
-  scoreNowText: {fileID: 0}
-  scoreText: {fileID: 851961106}
   finishPrefab: {fileID: 1407079463}
   winMenu: {fileID: 1755677276}
   levelText: {fileID: 950825009}
@@ -2541,7 +2541,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -119071790
+  randomSeed: 406858300
   InitialModule:
     serializedVersion: 3
     enabled: 1
