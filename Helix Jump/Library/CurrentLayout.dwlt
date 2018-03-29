@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: -1920
+    x: 0
     y: 43
     width: 1920
     height: 997
@@ -40,8 +40,8 @@ MonoBehaviour:
     y: 0
     width: 420
     height: 631
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -143,7 +143,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &7
 MonoBehaviour:
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: -1920
+    x: 0
     y: 723
     width: 1544
     height: 295
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: -372
+    x: 1548
     y: 92
     width: 372
     height: 926
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: -1920
+    x: 0
     y: 723
     width: 1544
     height: 295
@@ -557,19 +557,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Materials/Platform
+    - Assets/Materials/Ref
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials/Platform
+  - Assets/Materials/Ref
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\Will\Github\Helix-Jump\Helix Jump
+  m_LastProjectPath: D:\Github\Helix-Jump\Helix Jump
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 62}
-    m_SelectedIDs: c8040100
-    m_LastClickedID: 66760
-    m_ExpandedIDs: 0000000000290000c42b0000982c0000e22c0000342e00007e33000076aa000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 114}
+    m_SelectedIDs: 0c490000
+    m_LastClickedID: 18700
+    m_ExpandedIDs: 0000000000320000c4340000103500009a350000e235000034370000723c0000963c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -597,7 +597,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: d4270000
     m_LastClickedID: 10196
-    m_ExpandedIDs: 0000000000290000a2290000702b0000c42b0000982c0000e22c0000342e00007e330000
+    m_ExpandedIDs: 0000000000320000c4340000103500009a350000e235000034370000723c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -674,7 +674,7 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
-    x: -1498
+    x: 422
     y: 92
     width: 1122
     height: 610
@@ -751,7 +751,7 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
-    x: -1498
+    x: 422
     y: 92
     width: 1122
     height: 610
@@ -790,11 +790,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.07971944, y: 0.0155809885, z: -0.0011543139, w: -0.9967472}
     speed: 2
-    m_Value: {x: -0.07971529, y: 0.015580177, z: -0.0011542537, w: -0.9966953}
+    m_Value: {x: -0.07971945, y: 0.015580989, z: -0.001154314, w: -0.99674726}
   m_Size:
-    m_Target: 162.9025
+    m_Target: 305.8209
     speed: 2
-    m_Value: 162.9025
+    m_Value: 305.8209
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -828,16 +828,16 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: -1920
+    x: 0
     y: 92
     width: 418
     height: 610
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 84fbffff00000000f2310000
+    m_SelectedIDs: b6390000
+    m_LastClickedID: 14774
+    m_ExpandedIDs: c00cfcffec0cfcffbe0efcffc80efcfff60efcffe8f5ffff00000000cc370000e4370000ec3700006038000008390000123900007e390000563a0000643a0000683a0000a83a0000e83a00007c3b0000a63b0000d83b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -22,6 +22,9 @@ public class colorSchemen : MonoBehaviour
     public Material trailGlobal;
     [Tooltip("拖尾材质（参考）")]
     public Material trailRef;
+    [Tooltip("精灵渲染器")]
+    public SpriteRenderer spot;
+
 
     [Header("背景材质")]
     [Tooltip("背景")]
@@ -45,8 +48,7 @@ public class colorSchemen : MonoBehaviour
     [Tooltip("平台材质")]
     public List<Material> platform;
 
-    [Tooltip("精灵渲染器")]
-    public SpriteRenderer spot;
+    [Header("拖尾材质")]
     [Tooltip("拖尾材质")]
     public List<Material> trail;
 
